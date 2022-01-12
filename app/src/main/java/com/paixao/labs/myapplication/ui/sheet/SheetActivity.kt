@@ -3,6 +3,7 @@
 package com.paixao.labs.myapplication.ui.sheet
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,8 +13,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -29,30 +29,75 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.FirebaseApp
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.paixao.labs.myapplication.R
 import com.paixao.labs.myapplication.domain.Attributes
 import com.paixao.labs.myapplication.domain.CharacterSheet
+import com.paixao.labs.myapplication.domain.User
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import kotlinx.coroutines.launch
 
-private val viewModel by lazy { SheetViewModel() }
-
 class SheetActivity : ComponentActivity() {
+    private val viewModel by lazy { SheetViewModel() }
+    private val database = Firebase.database
+    private val myRef = database.getReference("mesa").child("users")
+    private lateinit var currentUserName: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            SheetTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    color = MaterialTheme.colors.background
-                ) {
+        FirebaseApp.initializeApp(this.applicationContext)
 
-                    val characterSheet = viewModel.retrieveSheet().collectAsState().value
-                    Sheet(
-                        title = getString(R.string.sheet_title, "Leonardo"),
-                        characterSheet = characterSheet
-                    )
+        setContent {
+            var title by remember {
+                mutableStateOf("")
+            }
+
+            /* myRef.addValueEventListener(object : ValueEventListener {
+                 override fun onDataChange(dataSnapshot: DataSnapshot) {
+                     val animalList: MutableList<User?> = ArrayList()
+                     for (ds in dataSnapshot.children) {
+                         val user = ds.getValue<User>()
+                         animalList.add(user)
+                     }
+                     currentUserName = animalList.first()?.nome.orEmpty()
+                     Log.d("TAG", "Users retrieved $animalList")
+                 }
+
+                 override fun onCancelled(error: DatabaseError) {
+                     // Failed to read value
+                     Log.w("TAG", "Failed to read value.", error.toException())
+                 }
+             })*/
+
+            viewModel.listenScreenState().collectAsState().runCatching {
+                val state = this.value
+                when {
+                    state.content != null -> title = state.content.nome
+                    state.error != null -> Log.e("Error", state.error.message.orEmpty())
+                    else -> {}
                 }
+            }
+            viewModel.retrieveUser()
+
+            SetupView(title)
+        }
+    }
+
+    @Composable
+    private fun SetupView(currentUserName: String) {
+
+        SheetTheme {
+            Surface(
+                color = MaterialTheme.colors.background
+            ) {
+
+                val characterSheet = viewModel.retrieveSheet().collectAsState().value
+                Sheet(
+                    title = getString(R.string.sheet_title, currentUserName),
+                    characterSheet = characterSheet
+                )
             }
         }
     }
@@ -105,9 +150,10 @@ class SheetActivity : ComponentActivity() {
                                 applicationContext,
                                 "Flecha nele!!!!",
                                 Toast.LENGTH_SHORT
-                            )
-                                .show()
+                            ).show()
                         }
+                        val teste = User(classe = "Mago", nome = "Thomaz")
+                        myRef.child("users").child("Leo").setValue(teste)
                     },
                     content = {
                         Text(

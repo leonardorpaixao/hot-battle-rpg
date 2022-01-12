@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "872864223006",
+    "firebase_url": "https://hot-battle-rpg-default-rtdb.firebaseio.com",
+    "project_id": "hot-battle-rpg",
+    "storage_bucket": "hot-battle-rpg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872864223006:android:d4f50917439a9ad55a830f",
+        "android_client_info": {
+          "package_name": "com.paixao.labs.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872864223006-q073gvkms0m4drndfjqt3iprteqp30bo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.paixao.labs.myapplication",
+            "certificate_hash": "7bb82cbeaaef4c97a1cf2bf54207e87175b25eb3"
+          }
+        },
+        {
+          "client_id": "872864223006-mqsrthm3vo0p9k5dh2murbtamh0hlu86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYLyFt1la3Z8pfQslbk8IQl0LNjmC22t8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872864223006-mqsrthm3vo0p9k5dh2murbtamh0hlu86.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
