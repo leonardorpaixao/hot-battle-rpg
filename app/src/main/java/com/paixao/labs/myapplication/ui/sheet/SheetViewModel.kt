@@ -2,9 +2,6 @@ package com.paixao.labs.myapplication.ui.sheet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.getValue
 import com.paixao.labs.myapplication.domain.models.CharacterSheet
 import com.paixao.labs.myapplication.domain.models.JobClass
@@ -23,7 +20,6 @@ import javax.inject.Inject
 internal class SheetViewModel @Inject constructor(
     private val userHandler: UserHandler
 ) : ViewModel() {
-    // private val userHandler = UserAgent(Firebase.database)
     private val _characterSheet: MutableStateFlow<CharacterSheet> =
         MutableStateFlow(mockedHero())
 
@@ -89,11 +85,4 @@ internal class SheetViewModel @Inject constructor(
             charisma = 10
         )
     )
-}
-
-internal class UserAgent(database: FirebaseDatabase) : UserHandler {
-    private val firebaseApi = database.getReference("mesa").child("users")
-
-    override suspend fun retrieveChampion(userId: String): Task<DataSnapshot> =
-        firebaseApi.child(userId).get()
 }
