@@ -4,23 +4,31 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ktx.database
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
-import com.paixao.labs.myapplication.domain.*
+import com.paixao.labs.myapplication.domain.models.CharacterSheet
+import com.paixao.labs.myapplication.domain.models.JobClass
+import com.paixao.labs.myapplication.domain.models.Race
+import com.paixao.labs.myapplication.domain.models.ScreenState
+import com.paixao.labs.myapplication.domain.models.User
+import com.paixao.labs.myapplication.domain.services.UserHandler
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-internal class SheetViewModel : ViewModel() {
+@HiltViewModel
+internal class SheetViewModel @Inject constructor(
+    private val userHandler: UserHandler
+) : ViewModel() {
+    // private val userHandler = UserAgent(Firebase.database)
     private val _characterSheet: MutableStateFlow<CharacterSheet> =
         MutableStateFlow(mockedHero())
 
     private val _screenState: MutableStateFlow<ScreenState<User>> =
         MutableStateFlow(ScreenState(isLoading = true))
-
-    private val userHandler = UserAgent()
 
     fun retrieveSheet() = _characterSheet.asStateFlow()
 
@@ -72,7 +80,7 @@ internal class SheetViewModel : ViewModel() {
         jobClass = JobClass.Ranger,
         alignment = "Leal e bom", level = 1,
         race = Race.Human,
-        attributes = Attributes(
+        attributes = com.paixao.labs.myapplication.domain.models.Attributes(
             strength = 14,
             dexterity = 18,
             constitution = 12,
@@ -83,14 +91,9 @@ internal class SheetViewModel : ViewModel() {
     )
 }
 
-interface UserHandler {
-    suspend fun retrieveChampion(userId: String): Task<DataSnapshot>
-}
-
-internal class UserAgent() : UserHandler {
-    private val database = Firebase.database
-    private val myRef = database.getReference("mesa").child("users")
+internal class UserAgent(database: FirebaseDatabase) : UserHandler {
+    private val firebaseApi = database.getReference("mesa").child("users")
 
     override suspend fun retrieveChampion(userId: String): Task<DataSnapshot> =
-        myRef.child(userId).get()
+        firebaseApi.child(userId).get()
 }

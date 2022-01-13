@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalUnitApi::class)
-
 package com.paixao.labs.myapplication.ui.sheet
 
 import android.os.Bundle
@@ -7,13 +5,37 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.absolutePadding
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.Button
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.material.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -29,26 +51,34 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
-import com.google.firebase.FirebaseApp
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.FirebaseDatabase
 import com.paixao.labs.myapplication.R
-import com.paixao.labs.myapplication.domain.Attributes
-import com.paixao.labs.myapplication.domain.CharacterSheet
-import com.paixao.labs.myapplication.domain.User
+import com.paixao.labs.myapplication.domain.models.Attributes
+import com.paixao.labs.myapplication.domain.models.CharacterSheet
+import com.paixao.labs.myapplication.domain.models.User
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@OptIn(ExperimentalUnitApi::class)
+@ExperimentalFoundationApi
+@AndroidEntryPoint
 class SheetActivity : ComponentActivity() {
-    private val viewModel by lazy { SheetViewModel() }
-    private val database = Firebase.database
-    private val myRef = database.getReference("mesa").child("users")
+    private val viewModel by viewModels<SheetViewModel>()
+
+    @Inject
+    lateinit var string: String
+
+    @Inject
+    lateinit var firebase: FirebaseDatabase
+
+    private val myRef by lazy { firebase.getReference("mesa").child("users") }
     private lateinit var currentUserName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this.applicationContext)
-
+        println("TESTE ---> $string")
         setContent {
             var title by remember {
                 mutableStateOf("")
@@ -260,6 +290,7 @@ fun TwoTexts(
     }
 }
 
+@ExperimentalUnitApi
 @Composable
 fun Toolbar(title: String, action: () -> Unit = {}) {
     Row(

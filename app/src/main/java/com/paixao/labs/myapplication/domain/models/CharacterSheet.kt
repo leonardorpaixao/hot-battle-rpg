@@ -1,4 +1,4 @@
-package com.paixao.labs.myapplication.domain
+package com.paixao.labs.myapplication.domain.models
 
 data class CharacterSheet(
     val name: String,

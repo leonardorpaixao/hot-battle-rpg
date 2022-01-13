@@ -1,4 +1,4 @@
-package com.paixao.labs.myapplication.domain
+package com.paixao.labs.myapplication.domain.models
 
 data class Response(
     val users: List<User>? = null

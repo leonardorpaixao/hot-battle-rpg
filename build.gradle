@@ -1,10 +1,12 @@
 buildscript {
     ext {
         compose_version = '1.1.0-beta01'
+        hilt_version = '2.40.5'
     }
 
     dependencies {
         classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40.5'
     }
 }
 plugins {
