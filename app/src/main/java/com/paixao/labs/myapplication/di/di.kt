@@ -1,36 +1,41 @@
 package com.paixao.labs.myapplication.di
 
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.hilt.ScreenModelKey
+import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.paixao.labs.myapplication.data.UserAgent
 import com.paixao.labs.myapplication.domain.services.UserHandler
-import com.paixao.labs.myapplication.ui.sheet.UserAgent
+import com.paixao.labs.myapplication.ui.sheet.SheetScreenModel
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.IntoMap
+import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
-
+@InstallIn(ActivityComponent::class)
+class ActivityModule {
     @Provides
-    fun provideFireBase(): Firebase {
-        return Firebase
+    fun retrieveString(): String{
+        return "TESTE"
     }
+}
 
-    @Provides
-    fun provideFireBaseDataBase(firebase: Firebase): FirebaseDatabase {
-        return firebase.database
-    }
+@Module
+@InstallIn(ActivityComponent::class)
+abstract class HiltModule {
 
-    @Provides
-    fun provideUserHandler(firebaseDatabase: FirebaseDatabase): UserHandler {
-        return UserAgent(firebaseDatabase)
-    }
+    @Binds
+    @IntoMap
+    @ScreenModelKey(SheetScreenModel::class)
+    abstract fun bindHiltScreenModel(hiltListScreenModel: SheetScreenModel): ScreenModel
 
-    @Provides
-    fun retrieveString(): String {
-        return "minha string bonitona"
-    }
+    @Binds
+    abstract fun bindAnalyticsService(userAgent: UserAgent): UserHandler
 }
