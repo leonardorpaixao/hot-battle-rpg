@@ -47,7 +47,6 @@ class SheetActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this.applicationContext)
 
         setContent {
             var title by remember {
