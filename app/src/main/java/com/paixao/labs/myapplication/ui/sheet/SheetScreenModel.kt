@@ -1,7 +1,7 @@
 package com.paixao.labs.myapplication.ui.sheet
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.coroutineScope
 import com.google.firebase.database.ktx.getValue
 import com.paixao.labs.myapplication.domain.models.CharacterSheet
 import com.paixao.labs.myapplication.domain.models.JobClass
@@ -9,17 +9,16 @@ import com.paixao.labs.myapplication.domain.models.Race
 import com.paixao.labs.myapplication.domain.models.ScreenState
 import com.paixao.labs.myapplication.domain.models.User
 import com.paixao.labs.myapplication.domain.services.UserHandler
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-@HiltViewModel
-internal class SheetViewModel @Inject constructor(
+class SheetScreenModel @Inject constructor(
     private val userHandler: UserHandler
-) : ViewModel() {
+) : ScreenModel {
+
     private val _characterSheet: MutableStateFlow<CharacterSheet> =
         MutableStateFlow(mockedHero())
 
@@ -32,11 +31,11 @@ internal class SheetViewModel @Inject constructor(
 
     fun retrieveUser() {
         runBlocking {
-            viewModelScope.launch {
+            coroutineScope.launch {
                 _screenState.emit(ScreenState<User>(isLoading = true))
                 userHandler.retrieveChampion("Leo").addOnCompleteListener {
                     val user = it.result?.getValue<User>()
-                    viewModelScope.launch {
+                    coroutineScope.launch {
                         if (user != null) {
                             _screenState.emit(
                                 ScreenState(
@@ -57,7 +56,7 @@ internal class SheetViewModel @Inject constructor(
                     }
                 }
                     .addOnFailureListener { exception ->
-                        viewModelScope.launch {
+                        coroutineScope.launch {
                             _screenState.emit(
                                 ScreenState(
                                     content = null,
