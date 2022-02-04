@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sheet">
         <activity
-            android:name=".ui.sheet.SheetActivity"
+            android:name=".ui.OneActivity"
             android:exported="true"
             android:theme="@style/Theme.Sheet">
             <intent-filter>
