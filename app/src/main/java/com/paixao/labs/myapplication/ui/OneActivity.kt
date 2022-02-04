@@ -3,10 +3,12 @@ package com.paixao.labs.myapplication.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import cafe.adriel.voyager.navigator.Navigator
-import com.paixao.labs.myapplication.ui.sheet.SheetScreen
+import cafe.adriel.voyager.transitions.SlideTransition
+import com.paixao.labs.myapplication.ui.login.LoginScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @OptIn(ExperimentalUnitApi::class)
@@ -14,11 +16,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class OneActivity : ComponentActivity() {
 
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Navigator(screen = SheetScreen())
+            Navigator(screen = LoginScreen()) { navigator ->
+                SlideTransition(navigator)
+            }
         }
     }
 }
