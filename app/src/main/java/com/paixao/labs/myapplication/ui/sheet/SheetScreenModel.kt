@@ -2,7 +2,6 @@ package com.paixao.labs.myapplication.ui.sheet
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
-import cafe.adriel.voyager.hilt.ScreenModelFactory
 import com.google.firebase.database.ktx.getValue
 import com.paixao.labs.myapplication.domain.models.CharacterSheet
 import com.paixao.labs.myapplication.domain.models.JobClass
@@ -10,7 +9,6 @@ import com.paixao.labs.myapplication.domain.models.Race
 import com.paixao.labs.myapplication.domain.models.ScreenState
 import com.paixao.labs.myapplication.domain.models.User
 import com.paixao.labs.myapplication.domain.services.UserHandler
-
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

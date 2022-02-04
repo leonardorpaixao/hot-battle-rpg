@@ -4,12 +4,15 @@ plugins {
     id 'org.jmailen.kotlinter'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
     compileSdk 31
+
     defaultConfig {
-        minSdk 21
+        applicationId "com.paixao.labs.myapplication"
+        minSdk 24
         targetSdk 31
         versionCode 1
         versionName "1.0"

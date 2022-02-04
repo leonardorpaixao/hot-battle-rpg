@@ -63,7 +63,6 @@ class SheetScreen : AndroidScreen() {
         SetupView(viewModel, context)
     }
 
-
     @Composable
     private fun SetupView(viewModel: SheetScreenModel, context: Context) {
 
@@ -74,7 +73,7 @@ class SheetScreen : AndroidScreen() {
 
                 val characterSheet = viewModel.retrieveSheet().collectAsState().value
                 Sheet(
-                    title = stringResource(R.string.sheet_title, "Leonardo"),
+                    title = stringResource(R.string.sheet_title, characterSheet.race.value),
                     characterSheet = characterSheet,
                     context = context
                 )
@@ -248,7 +247,7 @@ class SheetScreen : AndroidScreen() {
                     .align(Alignment.CenterVertically)
                     .clickable(role = Role.Button) { action() },
 
-                )
+            )
             Text(
                 text = title,
                 textAlign = TextAlign.Start,
@@ -257,7 +256,6 @@ class SheetScreen : AndroidScreen() {
                 fontSize = TextUnit(value = 20F, TextUnitType.Sp)
             )
         }
-
     }
 
     @Preview

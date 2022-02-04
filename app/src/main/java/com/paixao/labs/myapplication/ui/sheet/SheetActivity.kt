@@ -7,30 +7,25 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import cafe.adriel.voyager.navigator.Navigator
-import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.paixao.labs.myapplication.domain.models.User
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @OptIn(ExperimentalUnitApi::class)
 @ExperimentalFoundationApi
 @AndroidEntryPoint
 class SheetActivity : ComponentActivity() {
 
-
     private val myRef by lazy { Firebase.database.getReference("mesa").child("users") }
     private lateinit var currentUserName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this.applicationContext)
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val animalList: MutableList<User?> = ArrayList()
@@ -49,7 +44,7 @@ class SheetActivity : ComponentActivity() {
         })
 
         setContent {
-            //Navigator(screen = SheetScreen())
+            Navigator(screen = SheetScreen())
         }
     }
 }
