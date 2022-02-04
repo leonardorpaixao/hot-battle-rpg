@@ -1,24 +1,15 @@
 package com.paixao.labs.myapplication.ui.sheet
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absolutePadding
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -31,26 +22,26 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.paixao.labs.myapplication.R
 import com.paixao.labs.myapplication.domain.models.Attributes
 import com.paixao.labs.myapplication.domain.models.CharacterSheet
 import com.paixao.labs.myapplication.domain.models.JobClass
 import com.paixao.labs.myapplication.domain.models.Race
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
+import com.paixao.labs.myapplication.ui.utils.Dimens.DEFAULT_HORIZONTAL
+import com.paixao.labs.myapplication.ui.utils.components.PrimaryButton
+import com.paixao.labs.myapplication.ui.utils.components.Toolbar
+import com.paixao.labs.myapplication.ui.utils.components.TwoTexts
 import kotlinx.coroutines.launch
 
 @ExperimentalUnitApi
@@ -58,13 +49,12 @@ class SheetScreen : AndroidScreen() {
 
     @Composable
     override fun Content() {
-        val context = LocalContext.current
         val viewModel = getScreenModel<SheetScreenModel>()
-        SetupView(viewModel, context)
+        SetupView(viewModel)
     }
 
     @Composable
-    private fun SetupView(viewModel: SheetScreenModel, context: Context) {
+    private fun SetupView(viewModel: SheetScreenModel) {
 
         SheetTheme {
             Surface(
@@ -74,66 +64,60 @@ class SheetScreen : AndroidScreen() {
                 val characterSheet = viewModel.retrieveSheet().collectAsState().value
                 Sheet(
                     title = stringResource(R.string.sheet_title, characterSheet.race.value),
-                    characterSheet = characterSheet,
-                    context = context
+                    characterSheet = characterSheet
                 )
             }
         }
     }
 
     @Composable
-    fun Sheet(title: String, characterSheet: CharacterSheet, context: Context) {
+    fun Sheet(title: String, characterSheet: CharacterSheet) {
         val scope = rememberCoroutineScope()
-
+        val context = LocalContext.current
+        val navigator = LocalNavigator.currentOrThrow
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
                 Column {
-                    Toolbar(title)
+                    Toolbar(title, navigator::pop)
 
                     TextField(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .absolutePadding(left = 16.dp, right = 16.dp, top = 24.dp),
+                            .padding(horizontal = DEFAULT_HORIZONTAL)
+                            .absolutePadding(top = DEFAULT_HORIZONTAL),
                         value = characterSheet.name,
-                        label = { Text("Nome") },
+                        label = { Text(stringResource(id = R.string.sheet_name_label)) },
                         onValueChange = {},
                         readOnly = true,
                         enabled = false
-
                     )
+
                     TwoTexts(
-                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                        label1 = "Classe",
-                        text1 = characterSheet.jobClass.value,
-                        label2 = "Raça",
-                        text2 = characterSheet.race.value
+                        modifier = Modifier.padding(
+                            vertical = 8.dp,
+                            horizontal = DEFAULT_HORIZONTAL
+                        ),
+                        leftLabel = stringResource(id = R.string.sheet_name_label),
+                        leftContent = characterSheet.jobClass.value,
+                        rightLabel = stringResource(id = R.string.sheet_race_label),
+                        rightContent = characterSheet.race.value
                     )
                     Attributes(characterSheet.attributes)
                 }
             },
             bottomBar = {
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-
-                    onClick = {
-
+                PrimaryButton(
+                    action = {
                         scope.launch {
                             Toast.makeText(
                                 context,
-                                "Flecha nele!!!!",
+                                context.getText(R.string.sheet_attack_toast_message),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     },
-                    content = {
-                        Text(
-                            modifier = Modifier.padding(6.dp), text = "Atacar"
-                        )
-                    },
-                    shape = CircleShape
+                    text = stringResource(id = R.string.sheet_attack_label)
                 )
             },
             content = {}
@@ -142,13 +126,13 @@ class SheetScreen : AndroidScreen() {
 
     @Composable
     fun Attributes(attributes: Attributes) {
-        Column(modifier = Modifier.padding(start = 16.dp)) {
-            AttributeRow("For ", attributes.strength)
-            AttributeRow("Dex", attributes.dexterity)
-            AttributeRow("Con", attributes.constitution)
-            AttributeRow("Int   ", attributes.intelligence)
-            AttributeRow("Sab ", attributes.wisdom)
-            AttributeRow("Car  ", attributes.charisma)
+        Column(modifier = Modifier.padding(start = 24.dp)) {
+            AttributeRow(stringResource(id = R.string.sheet_str_label), attributes.strength)
+            AttributeRow(stringResource(id = R.string.sheet_dex_label), attributes.dexterity)
+            AttributeRow(stringResource(id = R.string.sheet_con_label), attributes.constitution)
+            AttributeRow(stringResource(id = R.string.sheet_int_label), attributes.intelligence)
+            AttributeRow(stringResource(id = R.string.sheet_win_label), attributes.wisdom)
+            AttributeRow(stringResource(id = R.string.sheet_car_label), attributes.charisma)
         }
     }
 
@@ -157,11 +141,11 @@ class SheetScreen : AndroidScreen() {
         label: String,
         content: Int
     ) {
-        Row() {
+        Row {
             Text(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
-                    .padding(end = 4.dp),
+                    .width(30.dp),
                 text = label
             )
             TextButton(
@@ -197,7 +181,10 @@ class SheetScreen : AndroidScreen() {
     @Preview
     @Composable
     fun Preview() {
-        Sheet("Ficha de Leonardo", characterSheet = mockedHero(), LocalContext.current)
+        Sheet(
+            stringResource(id = R.string.sheet_toolbar_label, "Leonardo"),
+            characterSheet = mockedHero()
+        )
     }
 
     fun mockedHero() = CharacterSheet(

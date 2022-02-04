@@ -1,4 +1,30 @@
 <resources>
     <string name="app_name">HotBattle RPG</string>
     <string name="sheet_title">Ficha de %s</string>
+
+
+
+    <string name="sheet_str_label">For</string>
+    <string name="sheet_dex_label">Dex</string>
+    <string name="sheet_con_label">Con</string>
+    <string name="sheet_int_label">Int</string>
+    <string name="sheet_win_label">Sab</string>
+    <string name="sheet_sab_label">Sab</string>
+    <string name="sheet_car_label">Car</string>
+    <string name="sheet_name_label">Nome</string>
+    <string name="sheet_class_label">Classe</string>
+    <string name="sheet_race_label">Raça</string>
+    <string name="sheet_toolbar_label">Ficha de %s</string>
+    <string name="sheet_attack_label">Atacar</string>
+    <string name="sheet_attack_toast_message">Ataque realizado</string>
+
+
+
+
+    <string name="login_table_code_label">Código da mesa</string>
+    <string name="login_table_code_hint">Digite o código de acesso a mesa</string>
+
+
+
+
 </resources>
