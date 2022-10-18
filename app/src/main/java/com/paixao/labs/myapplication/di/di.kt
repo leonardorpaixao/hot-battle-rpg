@@ -4,6 +4,8 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.hilt.ScreenModelKey
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.paixao.labs.myapplication.data.UserAgent
 import com.paixao.labs.myapplication.domain.services.UserHandler
@@ -27,8 +29,14 @@ internal class ActivityModule {
         firebase.database
 
     @Provides
-    fun retrieveUserAgent(firebaseDatabase: FirebaseDatabase): UserAgent {
-        return UserAgent(firebaseDatabase)
+    fun retrieveFirebaseFireStore(firebase: Firebase): FirebaseFirestore = firebase.firestore
+
+    @Provides
+    fun retrieveUserAgent(
+        firebaseDatabase: FirebaseDatabase,
+        firebaseFirestore: FirebaseFirestore
+    ): UserAgent {
+        return UserAgent(firebaseDatabase, firebaseFirestore)
     }
 }
 
