@@ -27,17 +27,7 @@ class SheetScreenModel @Inject constructor(
 
     private val _user: MutableStateFlow<UserState> = MutableStateFlow(UserState())
 
-    fun retrieveSheet() = _characterSheet.asStateFlow()
-
-    fun listenScreenState() = _screenState.asStateFlow()
-
-    fun listenNewUser() = _user.asStateFlow()
-
-    init {
-        retrieveUser()
-    }
-
-    fun retrieveUser(): Unit {
+    fun editCharacter(): Unit {
         _user.value = _user.value.copy(isLoading = true)
         runBlocking {
             coroutineScope.launch {
