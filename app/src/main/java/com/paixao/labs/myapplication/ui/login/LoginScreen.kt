@@ -1,7 +1,9 @@
 package com.paixao.labs.myapplication.ui.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -28,7 +32,8 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.paixao.labs.myapplication.R
-import com.paixao.labs.myapplication.ui.sheet.SheetScreen
+import com.paixao.labs.myapplication.ui.home.HomeStep
+import com.paixao.labs.myapplication.ui.sheet.CharacterDetailsScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.PrimaryButton
@@ -46,17 +51,17 @@ class LoginScreen : AndroidScreen() {
         val navigator = LocalNavigator.currentOrThrow
         SheetTheme {
             Surface(
-                color = MaterialTheme.colors.background
+                color = MaterialTheme.colors.onPrimary
             ) {
                 Scaffold(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.White),
+                        .background(Color.Red),
                     content = { ScreenContent() },
                     bottomBar = {
                         PrimaryButton(
                             action = {
-                                navigator.push(SheetScreen())
+                                navigator.push(HomeStep())
                             },
                             text = "Login"
                         )
@@ -70,28 +75,36 @@ class LoginScreen : AndroidScreen() {
 @Composable
 private fun ScreenContent() {
     var content by remember { mutableStateOf("") }
-    Column(
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        TextField(
-            placeholder = {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = stringResource(id = R.string.login_table_code_hint)
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimens.DEFAULT_HORIZONTAL)
-                .absolutePadding(top = Dimens.DEFAULT_HORIZONTAL)
-                .background(Color.White),
-            value = content,
-            onValueChange = { content = it },
-            enabled = true,
-            textStyle = TextStyle(textAlign = TextAlign.Center)
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(id = R.drawable.app_login_back_ground),
+            contentDescription = "",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.FillBounds
         )
+        Column(
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            TextField(
+                placeholder = {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        text = stringResource(id = R.string.login_table_code_hint)
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimens.DEFAULT_HORIZONTAL)
+                    .absolutePadding(top = Dimens.DEFAULT_HORIZONTAL)
+                    .background(Color.White),
+                value = content,
+                onValueChange = { content = it },
+                enabled = true,
+                textStyle = TextStyle(textAlign = TextAlign.Center)
+            )
+        }
     }
 }
 

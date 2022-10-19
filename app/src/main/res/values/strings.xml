@@ -16,7 +16,8 @@
     <string name="sheet_race_label">Raça</string>
     <string name="sheet_toolbar_label">Ficha de %s</string>
     <string name="sheet_attack_label">Atacar</string>
-    <string name="sheet_attack_toast_message">Ataque realizado</string>
+    <string name="sheet_save_label">Salvar</string>
+    <string name="sheet_changes_was_saved_toast_message">Alterações salvas com sucesso</string>
 
 
 

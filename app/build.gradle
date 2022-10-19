@@ -70,8 +70,10 @@ dependencies {
     implementation "cafe.adriel.voyager:voyager-androidx:$voyager_version"
 
 
-    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    implementation platform('com.google.firebase:firebase-bom:30.5.0')
+    implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
 }
 
 kapt {

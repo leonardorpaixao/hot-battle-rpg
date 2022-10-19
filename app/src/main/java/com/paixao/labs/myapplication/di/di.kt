@@ -9,7 +9,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.paixao.labs.myapplication.data.UserAgent
 import com.paixao.labs.myapplication.domain.services.UserHandler
-import com.paixao.labs.myapplication.ui.sheet.SheetScreenModel
+import com.paixao.labs.myapplication.ui.home.HomeStepModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -43,11 +43,10 @@ internal class ActivityModule {
 @Module
 @InstallIn(ActivityComponent::class)
 internal abstract class HiltModule {
-
     @Binds
     @IntoMap
-    @ScreenModelKey(SheetScreenModel::class)
-    abstract fun bindHiltScreenModel(hiltListScreenModel: SheetScreenModel): ScreenModel
+    @ScreenModelKey(HomeStepModel::class)
+    abstract fun bindHiltScreenModel(hiltListScreenModel: HomeStepModel): ScreenModel
 
     @Binds
     abstract fun bindAnalyticsService(userAgent: UserAgent): UserHandler

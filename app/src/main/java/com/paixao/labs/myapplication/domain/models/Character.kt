@@ -1,21 +1,21 @@
 package com.paixao.labs.myapplication.domain.models
 
-data class CharacterSheet(
-    val name: String,
-    val jobClass: JobClass,
-    val level: Int,
-    val race: Race,
-    val alignment: String,
-    val attributes: Attributes
+data class Character(
+    val name: String = "",
+    val jobClass: JobClass = JobClass.Cleric,
+    val level: Int = 0,
+    val race: Race = Race.Human,
+    val alignment: String = "",
+    val attributes: Attributes = Attributes(),
 )
 
 data class Attributes(
-    val strength: Int,
-    val dexterity: Int,
-    val constitution: Int,
-    val intelligence: Int,
-    val wisdom: Int,
-    val charisma: Int
+    val strength: Int = 0,
+    val agility: Int = 0,
+    val constitution: Int = 0,
+    val intelligence: Int = 0,
+    val wisdom: Int = 0,
+    val charisma: Int = 0,
 )
 
 enum class JobClass(val value: String) {

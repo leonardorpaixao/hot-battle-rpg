@@ -27,6 +27,6 @@ fun PrimaryButton(
         content = {
             Text(modifier = Modifier.padding(6.dp), text = text)
         },
-        shape = CircleShape
+        shape = CircleShape,
     )
 }
