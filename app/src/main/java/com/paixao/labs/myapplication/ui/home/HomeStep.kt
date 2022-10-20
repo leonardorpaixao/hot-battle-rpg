@@ -76,7 +76,7 @@ class HomeStep : AndroidScreen() {
                     Column(modifier = Modifier.fillMaxSize()) {
                         Column(
                             Modifier
-                                .padding(horizontal = 50.dp, vertical = 100.dp)
+                                .padding(horizontal = Dimens.xxXLarge, vertical = Dimens.xxXFkLarge)
                                 .background(
                                     color = Color.Transparent,
                                     shape = RoundedCornerShape(Dimens.xSmall)
@@ -86,11 +86,11 @@ class HomeStep : AndroidScreen() {
                             verticalArrangement = Arrangement.Center
                         ) {
                             Card(
-                                backgroundColor = MaterialTheme.colors.secondaryVariant,
+                                backgroundColor = MaterialTheme.colors.primary,
                                 shape = RoundedCornerShape(Dimens.xSmall),
                                 border = BorderStroke(
                                     color = MaterialTheme.colors.primaryVariant,
-                                    width = 2.dp
+                                    width = Dimens.xxXSmall
                                 ),
                                 modifier = Modifier.clickable {
                                     navigator.push(CharactersStep(characters = user.content?.characters.orEmpty()))
@@ -103,7 +103,7 @@ class HomeStep : AndroidScreen() {
                                     fontSize = 18.sp,
                                     fontFamily = FontFamily.Default,
                                     fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colors.primaryVariant
+                                    color = Color.Black
                                 )
 
                             }

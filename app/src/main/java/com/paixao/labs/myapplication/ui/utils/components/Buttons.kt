@@ -7,17 +7,20 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.paixao.labs.myapplication.ui.utils.Dimens.xLarge
 
 @Composable
 fun PrimaryButton(
+    modifier: Modifier? = null,
     action: () -> Unit,
     text: String
 ) {
 
     Button(
-        modifier = Modifier
+        modifier = modifier?.fillMaxWidth()
+            ?: Modifier
             .fillMaxWidth()
             .padding(xLarge),
 
@@ -25,7 +28,7 @@ fun PrimaryButton(
             action()
         },
         content = {
-            Text(modifier = Modifier.padding(6.dp), text = text)
+            Text(modifier = Modifier.padding(6.dp), text = text, color = Color.Black)
         },
         shape = CircleShape,
     )
