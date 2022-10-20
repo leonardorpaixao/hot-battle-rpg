@@ -33,7 +33,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.paixao.labs.myapplication.R
 import com.paixao.labs.myapplication.ui.home.HomeStep
-import com.paixao.labs.myapplication.ui.sheet.CharacterDetailsScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.PrimaryButton
@@ -96,8 +95,8 @@ private fun ScreenContent() {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Dimens.DEFAULT_HORIZONTAL)
-                    .absolutePadding(top = Dimens.DEFAULT_HORIZONTAL)
+                    .padding(horizontal = Dimens.xLarge)
+                    .absolutePadding(top = Dimens.xLarge)
                     .background(Color.White),
                 value = content,
                 onValueChange = { content = it },

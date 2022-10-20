@@ -14,6 +14,7 @@
     <string name="sheet_name_label">Nome</string>
     <string name="sheet_class_label">Classe</string>
     <string name="sheet_race_label">Raça</string>
+    <string name="sheet_level_label">Level</string>
     <string name="sheet_toolbar_label">Ficha de %s</string>
     <string name="sheet_attack_label">Atacar</string>
     <string name="sheet_save_label">Salvar</string>

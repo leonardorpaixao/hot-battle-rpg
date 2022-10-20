@@ -6,41 +6,62 @@ import com.paixao.labs.myapplication.domain.models.Attributes
 import com.paixao.labs.myapplication.domain.models.Character
 import com.paixao.labs.myapplication.domain.models.JobClass
 import com.paixao.labs.myapplication.domain.models.Race
-import com.paixao.labs.myapplication.domain.models.ScreenState
-import com.paixao.labs.myapplication.domain.models.User
 import com.paixao.labs.myapplication.domain.services.UserHandler
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-class SheetScreenModel @Inject constructor(
+
+class CharacterDetailsScreenModel @Inject constructor(
     private val userHandler: UserHandler
 ) : ScreenModel {
 
-    private val _characterSheet: MutableStateFlow<Character> =
-        MutableStateFlow(mockedHero())
+    private var _characterSheet: Character? = null
 
-    private val _screenState: MutableStateFlow<ScreenState<User>> =
-        MutableStateFlow(ScreenState(isLoading = true))
+    fun updateCharacterChanges(character: Character) {
+        _characterSheet = character
+    }
 
-    private val _user: MutableStateFlow<UserState> = MutableStateFlow(UserState())
 
-    fun editCharacter(): Unit {
-        _user.value = _user.value.copy(isLoading = true)
+    fun updateCharacterName(newName: String) {
+        _characterSheet = _characterSheet?.copy(name = newName)
+    }
+
+    fun updateCharacterLevel(newLevel: String) {
+        _characterSheet = _characterSheet?.copy(level = newLevel.toInt())
+    }
+
+    fun updateJobClass(newJobClass: JobClass) {
+        _characterSheet = _characterSheet?.copy(jobClass = newJobClass)
+    }
+
+    fun updateRace(newRace: Race) {
+        _characterSheet = _characterSheet?.copy(race = newRace)
+    }
+
+    fun updateAttribute(newAttributes: Attributes) {
+        _characterSheet = _characterSheet?.copy(attributes = newAttributes)
+    }
+
+
+    fun editCharacter(character: Character): Unit {
+        if (character == _characterSheet) return
         runBlocking {
             coroutineScope.launch {
                 runCatching {
-                    userHandler.retrieveUser("0")
+
+                    _characterSheet?.let {
+                        userHandler.updateCharacter(
+                            "0",
+                            _characterSheet!!,
+                            character
+                        )
+                    }
                 }.fold(
                     onSuccess = { userResult ->
-                        _user.emit(_user.value.copy(isLoading = false, content = userResult))
                     },
                     onFailure = { error ->
-                        _user.emit(
-                            _user.value.copy(isLoading = false, error = error)
-                        )
+
                     }
                 )
 
@@ -61,12 +82,14 @@ class SheetScreenModel @Inject constructor(
             intelligence = 12,
             wisdom = 14,
             charisma = 10
-        )
+        ),
+        id = ""
     )
 }
 
-data class UserState(
-    val content: User? = null,
+data class CharacterSheetState(
+    val content: Character,
     val isLoading: Boolean = true,
     val error: Throwable? = null
 )
+

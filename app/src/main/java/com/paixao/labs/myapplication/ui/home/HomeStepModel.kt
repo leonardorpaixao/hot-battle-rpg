@@ -4,7 +4,6 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.paixao.labs.myapplication.domain.models.User
 import com.paixao.labs.myapplication.domain.services.UserHandler
-import com.paixao.labs.myapplication.ui.sheet.UserState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -48,7 +47,7 @@ internal class HomeStepModel @Inject constructor(
 }
 
 
-data class HomeState(
+data class UserState(
     val content: User? = null,
     val isLoading: Boolean = true,
     val error: Throwable? = null

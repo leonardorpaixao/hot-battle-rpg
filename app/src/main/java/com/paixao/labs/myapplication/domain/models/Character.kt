@@ -7,6 +7,7 @@ data class Character(
     val race: Race = Race.Human,
     val alignment: String = "",
     val attributes: Attributes = Attributes(),
+    val id: String
 )
 
 data class Attributes(

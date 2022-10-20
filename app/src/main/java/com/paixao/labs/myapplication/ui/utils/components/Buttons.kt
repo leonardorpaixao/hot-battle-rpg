@@ -8,7 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.paixao.labs.myapplication.ui.utils.Dimens.DEFAULT_HORIZONTAL
+import com.paixao.labs.myapplication.ui.utils.Dimens.xLarge
 
 @Composable
 fun PrimaryButton(
@@ -19,7 +19,7 @@ fun PrimaryButton(
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(DEFAULT_HORIZONTAL),
+            .padding(xLarge),
 
         onClick = {
             action()

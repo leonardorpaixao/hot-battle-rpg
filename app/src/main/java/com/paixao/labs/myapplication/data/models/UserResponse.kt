@@ -10,6 +10,7 @@ data class UserResponse(
 )
 
 data class CharacterResponse(
+    val id: String = "",
     val name: String = "",
     val jobClass: String = "",
     val level: Int = 0,

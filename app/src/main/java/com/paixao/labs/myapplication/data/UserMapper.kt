@@ -27,6 +27,7 @@ object UserMapper {
     private fun List<CharacterResponse>.toDomain(): List<Character> = map { characterResponse ->
         characterResponse.run {
             Character(
+                id = id,
                 name = name,
                 jobClass = JobClass.valueOf(jobClass),
                 level = level,

@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.paixao.labs.myapplication.R
+import com.paixao.labs.myapplication.ui.utils.Dimens
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
@@ -26,7 +27,7 @@ fun Toolbar(title: String, action: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(Dimens.medium)
     ) {
         Image(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_back),

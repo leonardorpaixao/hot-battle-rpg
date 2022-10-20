@@ -43,6 +43,7 @@ import com.paixao.labs.myapplication.domain.models.JobClass
 import com.paixao.labs.myapplication.domain.models.Race
 import com.paixao.labs.myapplication.ui.characters.CharactersStep
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
+import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.PrimaryButton
 import kotlinx.coroutines.launch
 
@@ -78,7 +79,7 @@ class HomeStep : AndroidScreen() {
                                 .padding(horizontal = 50.dp, vertical = 100.dp)
                                 .background(
                                     color = Color.Transparent,
-                                    shape = RoundedCornerShape(8.dp)
+                                    shape = RoundedCornerShape(Dimens.xSmall)
                                 )
                                 .fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -86,7 +87,7 @@ class HomeStep : AndroidScreen() {
                         ) {
                             Card(
                                 backgroundColor = MaterialTheme.colors.secondaryVariant,
-                                shape = RoundedCornerShape(8.dp),
+                                shape = RoundedCornerShape(Dimens.xSmall),
                                 border = BorderStroke(
                                     color = MaterialTheme.colors.primaryVariant,
                                     width = 2.dp
@@ -143,6 +144,7 @@ class HomeStep : AndroidScreen() {
             intelligence = 12,
             wisdom = 14,
             charisma = 10
-        )
+        ),
+        id = ""
     )
 }
