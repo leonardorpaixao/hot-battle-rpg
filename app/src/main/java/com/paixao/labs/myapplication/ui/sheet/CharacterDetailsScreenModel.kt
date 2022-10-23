@@ -148,6 +148,7 @@ internal class CharacterDetailsScreenModel @Inject constructor(
                     }
                 }.fold(
                     onSuccess = { userResult ->
+                        sessionHandler.updateSession()
                     },
                     onFailure = { error ->
 
