@@ -14,5 +14,6 @@ object Dimens {
     val xLarge = 24.dp
     val xXLarge = 32.dp
     val xxXLarge = 40.dp
+    val xxxXLarge = 70.dp
     val xxXFkLarge = 120.dp
 }

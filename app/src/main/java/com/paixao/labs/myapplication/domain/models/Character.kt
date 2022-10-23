@@ -1,5 +1,12 @@
 package com.paixao.labs.myapplication.domain.models
 
+import com.paixao.labs.myapplication.domain.models.Attribute.Agility
+import com.paixao.labs.myapplication.domain.models.Attribute.Charisma
+import com.paixao.labs.myapplication.domain.models.Attribute.Constitution
+import com.paixao.labs.myapplication.domain.models.Attribute.Intelligence
+import com.paixao.labs.myapplication.domain.models.Attribute.Strength
+import com.paixao.labs.myapplication.domain.models.Attribute.Wisdom
+
 data class Character(
     val name: String = "",
     val jobClass: JobClass = JobClass.Cleric,
@@ -7,16 +14,20 @@ data class Character(
     val race: Race = Race.Human,
     val alignment: String = "",
     val attributes: Attributes = Attributes(),
-    val id: String
-)
+    val id: String,
+) {
+    companion object {
+        val new = Character(id = "")
+    }
+}
 
 data class Attributes(
-    val strength: Int = 0,
-    val agility: Int = 0,
-    val constitution: Int = 0,
-    val intelligence: Int = 0,
-    val wisdom: Int = 0,
-    val charisma: Int = 0,
+    val strength: Strength = Strength(0),
+    val agility: Agility = Agility(0),
+    val constitution: Constitution = Constitution(0),
+    val intelligence: Intelligence = Intelligence(0),
+    val wisdom: Wisdom = Wisdom(0),
+    val charisma: Charisma = Charisma(0),
 )
 
 enum class JobClass(val value: String) {

@@ -40,15 +40,12 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DataSnapshot
 import com.paixao.labs.myapplication.R
+import com.paixao.labs.myapplication.domain.models.Attribute
 import com.paixao.labs.myapplication.domain.models.Attributes
 import com.paixao.labs.myapplication.domain.models.Character
 import com.paixao.labs.myapplication.domain.models.JobClass
 import com.paixao.labs.myapplication.domain.models.Race
-import com.paixao.labs.myapplication.domain.models.User
-import com.paixao.labs.myapplication.domain.services.UserHandler
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.NameAndLevelRow
@@ -57,7 +54,10 @@ import com.paixao.labs.myapplication.ui.utils.components.Toolbar
 import kotlinx.coroutines.launch
 
 @ExperimentalUnitApi
-class CharacterDetailsScreen(private val character: Character) : AndroidScreen() {
+class CharacterDetailsScreen(
+    private val character: Character,
+    private val isNewCharacter: Boolean = false
+) : AndroidScreen() {
 
     @Composable
     override fun Content() {
@@ -66,19 +66,15 @@ class CharacterDetailsScreen(private val character: Character) : AndroidScreen()
 
     @Composable
     private fun SetupView() {
-        val viewModel = getScreenModel<CharacterDetailsScreenModel>()
 
         SheetTheme {
             Surface(
                 color = MaterialTheme.colors.background
             ) {
                 Sheet(
-                    title = stringResource(
-                        R.string.sheet_title,
-                        character.name
-                    ),
+                    title = stringResource(R.string.sheet_title, character.name),
                     character = character,
-                    model = viewModel
+                    isNewCharacter = isNewCharacter,
                 )
             }
         }
@@ -87,7 +83,12 @@ class CharacterDetailsScreen(private val character: Character) : AndroidScreen()
 
 
 @Composable
-fun Sheet(title: String, character: Character, model: CharacterDetailsScreenModel) {
+private fun AndroidScreen.Sheet(
+    title: String,
+    character: Character,
+    isNewCharacter: Boolean
+) {
+    val model = getScreenModel<CharacterDetailsScreenModel>()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val navigator = LocalNavigator.currentOrThrow
@@ -103,7 +104,7 @@ fun Sheet(title: String, character: Character, model: CharacterDetailsScreenMode
                 Toolbar(title, navigator::pop)
                 NameAndLevelRow(
                     modifier = Modifier.padding(
-                        vertical =  Dimens.xSmall,
+                        vertical = Dimens.xSmall,
                         horizontal = Dimens.xLarge
                     ),
                     character = character,
@@ -133,14 +134,14 @@ fun Sheet(title: String, character: Character, model: CharacterDetailsScreenMode
 
                 }
 
-                AttributesField(character.attributes)
+                AttributesField(character.attributes, model)
             }
         },
         bottomBar = {
             PrimaryButton(
                 action = {
                     scope.launch {
-                        model.editCharacter(character)
+                        model.saveCharacter(character, isNewCharacter)
                         Toast.makeText(
                             context,
                             context.getText(R.string.sheet_changes_was_saved_toast_message),
@@ -156,7 +157,7 @@ fun Sheet(title: String, character: Character, model: CharacterDetailsScreenMode
 }
 
 @Composable
-fun AttributesField(attributes: Attributes) {
+private fun AttributesField(attributes: Attributes, model: CharacterDetailsScreenModel) {
     Text(
         modifier = Modifier
             .padding(horizontal = Dimens.xLarge)
@@ -166,21 +167,23 @@ fun AttributesField(attributes: Attributes) {
         fontWeight = FontWeight.SemiBold,
     )
     Column(modifier = Modifier.padding(start = Dimens.xLarge)) {
-        AttributeRow(stringResource(id = R.string.sheet_str_label), attributes.strength)
-        AttributeRow(stringResource(id = R.string.sheet_dex_label), attributes.agility)
-        AttributeRow(stringResource(id = R.string.sheet_con_label), attributes.constitution)
-        AttributeRow(stringResource(id = R.string.sheet_int_label), attributes.intelligence)
-        AttributeRow(stringResource(id = R.string.sheet_win_label), attributes.wisdom)
-        AttributeRow(stringResource(id = R.string.sheet_car_label), attributes.charisma)
+        AttributeRow(stringResource(id = R.string.sheet_str_label), attributes.strength, model)
+        AttributeRow(stringResource(id = R.string.sheet_dex_label), attributes.agility, model)
+        AttributeRow(stringResource(id = R.string.sheet_con_label), attributes.constitution, model)
+        AttributeRow(stringResource(id = R.string.sheet_int_label), attributes.intelligence, model)
+        AttributeRow(stringResource(id = R.string.sheet_win_label), attributes.wisdom, model)
+        AttributeRow(stringResource(id = R.string.sheet_car_label), attributes.charisma, model)
     }
 }
 
 @Composable
-fun AttributeRow(
+private fun AttributeRow(
     label: String,
-    content: Int
+    content: Attribute,
+    model: CharacterDetailsScreenModel
 ) {
-    var attrState by remember { mutableStateOf(content.toString()) }
+    var attrState by remember { mutableStateOf(content.value.toString()) }
+    var attrModifier = if(attrState.isBlank()) "0" else attrState
 
     Row {
         Text(
@@ -198,10 +201,13 @@ fun AttributeRow(
             TextField(
                 modifier = Modifier
                     .background(Color.White)
-                    .width(70.dp),
+                    .width(Dimens.xxxXLarge),
                 label = null,
                 value = attrState,
-                onValueChange = { attrState = it },
+                onValueChange = { newAttr ->
+                    attrState = newAttr
+                    model.updateAttribute(attrState, content)
+                },
                 enabled = true,
                 textStyle = TextStyle(textAlign = TextAlign.Center),
                 singleLine = true,
@@ -227,7 +233,7 @@ fun AttributeRow(
                     .background(Color.White)
                     .width(70.dp),
                 label = null,
-                value = ((attrState.toInt() - 10) / 2).toString(),
+                value = ((attrModifier.toInt() - 10) / 2).toString(),
                 onValueChange = { },
                 enabled = false,
                 textStyle = TextStyle(textAlign = TextAlign.Center, color = Color.Black),
@@ -245,26 +251,11 @@ fun AttributeRow(
     }
 }
 
+@OptIn(ExperimentalUnitApi::class)
 @Preview
 @Composable
 fun Preview() {
-    Sheet(
-        stringResource(id = R.string.sheet_toolbar_label, "Leonardo"),
-        character = mockedHero(),
-        model = CharacterDetailsScreenModel(MockHandler)
-    )
-}
-
-object MockHandler : UserHandler {
-    override suspend fun retrieveChampion(userId: String): Task<DataSnapshot> {TODO()}
-    override suspend fun retrieveUser(userId: String): User { TODO() }
-    override suspend fun createCharacter(userId: String, newCharacterData: Character) {}
-    override suspend fun updateCharacter(
-        userId: String,
-        newCharacterData: Character,
-        oldCharacterData: Character
-    ) {}
-    override suspend fun deleteCharacter(userId: String, newCharacterData: Character) {}
+    CharacterDetailsScreen(mockedHero(), false).Content()
 }
 
 fun mockedHero() = Character(
@@ -273,12 +264,12 @@ fun mockedHero() = Character(
     alignment = "Leal e bom", level = 1,
     race = Race.Human,
     attributes = Attributes(
-        strength = 14,
-        agility = 18,
-        constitution = 12,
-        intelligence = 12,
-        wisdom = 14,
-        charisma = 10
+        strength = Attribute.Strength(0),
+        agility = Attribute.Agility(0),
+        constitution = Attribute.Constitution(0),
+        intelligence = Attribute.Intelligence(0),
+        wisdom = Attribute.Wisdom(0),
+        charisma = Attribute.Charisma(0)
     ),
     id = ""
 )

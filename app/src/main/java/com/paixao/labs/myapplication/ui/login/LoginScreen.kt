@@ -49,7 +49,8 @@ class LoginScreen : AndroidScreen() {
         val loginState = model.retrieveLoginStatus().collectAsState().value
 
         if (loginState.success != null)
-            navigator.replace(HomeStep())
+            navigator.push(HomeStep())
+
 
         SheetTheme {
             Surface(

@@ -10,7 +10,7 @@ interface UserHandler {
     suspend fun retrieveUser(userId: String): User
 
     suspend fun createCharacter(userId: String, newCharacterData: Character)
-    suspend fun deleteCharacter(userId: String, newCharacterData: Character)
+    suspend fun deleteCharacter(userId: String, characterToDelete: Character)
 
     suspend fun updateCharacter(
         userId: String,

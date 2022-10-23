@@ -1,19 +1,22 @@
 package com.paixao.labs.myapplication.data
 
+import com.paixao.labs.myapplication.data.models.AttributesResponse
 import com.paixao.labs.myapplication.data.models.CharacterResponse
 import com.paixao.labs.myapplication.data.models.MasterResponse
 import com.paixao.labs.myapplication.data.models.TableResponse
 import com.paixao.labs.myapplication.data.models.UserResponse
+import com.paixao.labs.myapplication.domain.models.Attribute
+import com.paixao.labs.myapplication.domain.models.Attributes
 import com.paixao.labs.myapplication.domain.models.Character
 import com.paixao.labs.myapplication.domain.models.JobClass
 import com.paixao.labs.myapplication.domain.models.Master
 import com.paixao.labs.myapplication.domain.models.Race
 import com.paixao.labs.myapplication.domain.models.Table
 import com.paixao.labs.myapplication.domain.models.User
-import java.util.Locale
 
 object UserMapper {
 
+    @JvmName("toDomainUserResponse")
     fun UserResponse.toDomain(): User = this.let { response ->
         User(
             id = response.id,
@@ -33,7 +36,7 @@ object UserMapper {
                 level = level,
                 race = Race.valueOf(race),
                 alignment = alignment,
-                attributes = attributes,
+                attributes = attributes.toDomain(),
             )
         }
     }
@@ -53,4 +56,15 @@ object UserMapper {
         )
     }
 
+}
+
+private fun AttributesResponse.toDomain(): Attributes = run {
+    Attributes(
+        strength = Attribute.Strength(strength),
+        agility = Attribute.Agility(agility),
+        constitution = Attribute.Constitution(constitution),
+        intelligence = Attribute.Intelligence(intelligence),
+        wisdom = Attribute.Wisdom(wisdom),
+        charisma = Attribute.Charisma(charisma),
+    )
 }

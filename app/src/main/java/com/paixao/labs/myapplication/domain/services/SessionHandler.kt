@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 internal interface SessionHandler {
-    suspend fun getCurrentSession(): Flow<Session>
+    suspend fun getCurrentSession(): Session
     suspend fun login(): Flow<LoginResultState>
     suspend fun logout()
+    suspend fun updateSession()
 }

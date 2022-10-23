@@ -1,5 +1,6 @@
 package com.paixao.labs.myapplication.data.models
 
+import com.paixao.labs.myapplication.domain.models.Attribute
 import com.paixao.labs.myapplication.domain.models.Attributes
 
 data class UserResponse(
@@ -16,7 +17,16 @@ data class CharacterResponse(
     val level: Int = 0,
     val race: String = "",
     val alignment: String = "",
-    val attributes: Attributes = Attributes(),
+    val attributes: AttributesResponse = AttributesResponse(),
+)
+
+data class AttributesResponse(
+    val strength: Int = 0,
+    val agility: Int = 0,
+    val constitution: Int = 0,
+    val intelligence: Int = 0,
+    val wisdom: Int = 0,
+    val charisma: Int = 0,
 )
 
 data class MasterResponse(

@@ -2,21 +2,24 @@ package com.paixao.labs.myapplication.ui.sheet
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
-import com.paixao.labs.myapplication.domain.models.Attributes
+import com.paixao.labs.myapplication.domain.models.Attribute
 import com.paixao.labs.myapplication.domain.models.Character
 import com.paixao.labs.myapplication.domain.models.JobClass
 import com.paixao.labs.myapplication.domain.models.Race
+import com.paixao.labs.myapplication.domain.services.SessionHandler
 import com.paixao.labs.myapplication.domain.services.UserHandler
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
-class CharacterDetailsScreenModel @Inject constructor(
-    private val userHandler: UserHandler
+internal class CharacterDetailsScreenModel @Inject constructor(
+    private val userHandler: UserHandler,
+    private val sessionHandler: SessionHandler,
 ) : ScreenModel {
 
     private var _characterSheet: Character? = null
+    private var _oldCharacter: Character? = null
 
     fun updateCharacterChanges(character: Character) {
         _characterSheet = character
@@ -39,22 +42,108 @@ class CharacterDetailsScreenModel @Inject constructor(
         _characterSheet = _characterSheet?.copy(race = newRace)
     }
 
-    fun updateAttribute(newAttributes: Attributes) {
-        _characterSheet = _characterSheet?.copy(attributes = newAttributes)
+    fun updateAttribute(newAttribute: String, content: Attribute) {
+        val adjustedAttr = if (newAttribute.isBlank()) "0" else newAttribute
+        when (content) {
+            is Attribute.Strength -> _characterSheet =
+                _characterSheet?.copy(
+                    attributes = _characterSheet?.attributes!!.copy(
+                        strength = Attribute.Strength(
+                            (adjustedAttr.toInt())
+                        )
+                    )
+                )
+
+            is Attribute.Agility -> _characterSheet =
+                _characterSheet?.copy(
+                    attributes = _characterSheet?.attributes!!.copy(
+                        agility = Attribute.Agility(
+                            (adjustedAttr.toInt())
+                        )
+                    )
+                )
+
+
+            is Attribute.Constitution -> _characterSheet =
+                _characterSheet?.copy(
+                    attributes = _characterSheet?.attributes!!.copy(
+                        constitution = Attribute.Constitution((adjustedAttr.toInt()))
+                    )
+                )
+
+            is Attribute.Intelligence -> _characterSheet =
+                _characterSheet?.copy(
+                    attributes = _characterSheet?.attributes!!.copy(
+                        intelligence = Attribute.Intelligence((adjustedAttr.toInt()))
+                    )
+                )
+
+
+            is Attribute.Wisdom -> _characterSheet =
+                _characterSheet?.copy(
+                    attributes = _characterSheet?.attributes!!.copy(
+                        wisdom = Attribute.Wisdom(
+                            (adjustedAttr.toInt())
+                        )
+                    )
+                )
+
+            is Attribute.Charisma -> _characterSheet =
+                _characterSheet?.copy(
+                    attributes = _characterSheet?.attributes!!.copy(
+                        charisma = Attribute.Charisma(
+                            (adjustedAttr.toInt())
+                        )
+                    )
+                )
+        }
     }
 
 
-    fun editCharacter(character: Character): Unit {
-        if (character == _characterSheet) return
+    fun saveCharacter(oldCharacter: Character, isNewCharacter: Boolean) {
+        if (isNewCharacter) createNewCharacter()
+        else editCharacter(oldCharacter)
+    }
+
+    fun editCharacter(oldCharacter: Character): Unit {
+        if ((_oldCharacter ?: oldCharacter) == _characterSheet) return
         runBlocking {
             coroutineScope.launch {
                 runCatching {
+                    val session = sessionHandler.getCurrentSession()
+                    val editedCharacter = _characterSheet
 
-                    _characterSheet?.let {
+                    if (editedCharacter != null) {
                         userHandler.updateCharacter(
-                            "0",
-                            _characterSheet!!,
-                            character
+                            userId = session.currentUserId,
+                            newCharacterData = editedCharacter,
+                            oldCharacterData = _oldCharacter ?: oldCharacter
+                        )
+                    }
+                }.fold(
+                    onSuccess = { userResult ->
+                        sessionHandler.updateSession()
+                    },
+                    onFailure = { error ->
+
+                    }
+                )
+
+            }
+        }
+    }
+
+    private fun createNewCharacter(): Unit {
+        runBlocking {
+            coroutineScope.launch {
+                runCatching {
+                    val session = sessionHandler.getCurrentSession()
+                    val newCharacter = _characterSheet
+
+                    if (newCharacter != null) {
+                        userHandler.createCharacter(
+                            userId = session.currentUserId,
+                            newCharacterData = newCharacter,
                         )
                     }
                 }.fold(
@@ -69,27 +158,6 @@ class CharacterDetailsScreenModel @Inject constructor(
         }
 
     }
-
-    fun mockedHero() = Character(
-        name = "Konnagan",
-        jobClass = JobClass.Ranger,
-        alignment = "Leal e bom", level = 1,
-        race = Race.Human,
-        attributes = Attributes(
-            strength = 14,
-            agility = 18,
-            constitution = 12,
-            intelligence = 12,
-            wisdom = 14,
-            charisma = 10
-        ),
-        id = ""
-    )
 }
 
-data class CharacterSheetState(
-    val content: Character,
-    val isLoading: Boolean = true,
-    val error: Throwable? = null
-)
 

@@ -7,6 +7,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.FadeTransition
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.paixao.labs.myapplication.ui.login.LoginScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +23,7 @@ class OneActivity : ComponentActivity() {
 
         setContent {
             Navigator(screen = LoginScreen()) { navigator ->
-                SlideTransition(navigator)
+                FadeTransition(navigator)
             }
         }
     }

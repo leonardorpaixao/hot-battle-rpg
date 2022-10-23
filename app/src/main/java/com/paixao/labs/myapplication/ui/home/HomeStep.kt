@@ -37,6 +37,7 @@ import cafe.adriel.voyager.hilt.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.paixao.labs.myapplication.R
+import com.paixao.labs.myapplication.domain.models.Attribute
 import com.paixao.labs.myapplication.domain.models.Attributes
 import com.paixao.labs.myapplication.domain.models.Character
 import com.paixao.labs.myapplication.domain.models.JobClass
@@ -93,7 +94,7 @@ class HomeStep : AndroidScreen() {
                                     width = Dimens.xxXSmall
                                 ),
                                 modifier = Modifier.clickable {
-                                    navigator.push(CharactersStep(characters = user.content?.characters.orEmpty()))
+                                    navigator.push(CharactersStep)
                                 }
                             ) {
 
@@ -131,20 +132,4 @@ class HomeStep : AndroidScreen() {
     fun Preview() {
         Content()
     }
-
-    fun mockedHero() = Character(
-        name = "Konnagan",
-        jobClass = JobClass.Ranger,
-        alignment = "Leal e bom", level = 1,
-        race = Race.Human,
-        attributes = Attributes(
-            strength = 14,
-            agility = 18,
-            constitution = 12,
-            intelligence = 12,
-            wisdom = 14,
-            charisma = 10
-        ),
-        id = ""
-    )
 }

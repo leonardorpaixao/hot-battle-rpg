@@ -3,7 +3,7 @@ package com.paixao.labs.myapplication.ui.home
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.paixao.labs.myapplication.domain.models.User
-import com.paixao.labs.myapplication.domain.services.UserHandler
+import com.paixao.labs.myapplication.domain.services.SessionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -11,7 +11,7 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 internal class HomeStepModel @Inject constructor(
-    private val userHandler: UserHandler
+    private val sessionHandler: SessionHandler
 ) : ScreenModel {
 
     private val _user: MutableStateFlow<UserState> = MutableStateFlow(UserState())
@@ -22,15 +22,15 @@ internal class HomeStepModel @Inject constructor(
         retrieveUser()
     }
 
-    fun retrieveUser(): Unit {
+    fun retrieveUser() {
         _user.value = _user.value.copy(isLoading = true)
         runBlocking {
             coroutineScope.launch {
                 runCatching {
-                    userHandler.retrieveUser("0")
+                    sessionHandler.getCurrentSession()
                 }.fold(
-                    onSuccess = { userResult ->
-                        _user.emit(_user.value.copy(isLoading = false, content = userResult))
+                    onSuccess = { session ->
+                        _user.emit(_user.value.copy(isLoading = false, content = session.user))
                     },
                     onFailure = { error ->
                         _user.emit(
