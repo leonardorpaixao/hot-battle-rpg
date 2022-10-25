@@ -6,7 +6,6 @@ import com.paixao.labs.myapplication.domain.models.Character
 import com.paixao.labs.myapplication.domain.models.User
 
 interface UserHandler {
-    suspend fun retrieveChampion(userId: String): Task<DataSnapshot>
     suspend fun retrieveUser(userId: String): User
 
     suspend fun createCharacter(userId: String, newCharacterData: Character)

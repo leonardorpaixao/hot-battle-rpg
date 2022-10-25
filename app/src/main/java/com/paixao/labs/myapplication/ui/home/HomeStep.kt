@@ -1,6 +1,5 @@
 package com.paixao.labs.myapplication.ui.home
 
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,12 +36,8 @@ import cafe.adriel.voyager.hilt.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.paixao.labs.myapplication.R
-import com.paixao.labs.myapplication.domain.models.Attribute
-import com.paixao.labs.myapplication.domain.models.Attributes
-import com.paixao.labs.myapplication.domain.models.Character
-import com.paixao.labs.myapplication.domain.models.JobClass
-import com.paixao.labs.myapplication.domain.models.Race
 import com.paixao.labs.myapplication.ui.characters.CharactersStep
+import com.paixao.labs.myapplication.ui.table.tableHome.TableHomeScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.PrimaryButton
@@ -54,12 +49,9 @@ class HomeStep : AndroidScreen() {
     @Composable
     override fun Content() {
         val scope = rememberCoroutineScope()
-        val context = LocalContext.current
         val navigator = LocalNavigator.currentOrThrow
 
-        val viewModel = getScreenModel<HomeStepModel>()
 
-        val user = viewModel.listenUser().collectAsState().value
 
         SheetTheme {
             Surface(
@@ -112,11 +104,7 @@ class HomeStep : AndroidScreen() {
                         Spacer(modifier = Modifier.weight(1F))
                         PrimaryButton(action = {
                             scope.launch {
-                                Toast.makeText(
-                                    context,
-                                    "Em desenvolvimento",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                navigator.push(TableHomeScreen)
                             }
 
                         }, text = "Entrar numa aventura")

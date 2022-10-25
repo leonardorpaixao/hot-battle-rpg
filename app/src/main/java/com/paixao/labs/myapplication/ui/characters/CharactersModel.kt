@@ -44,6 +44,7 @@ internal class CharactersModel @Inject constructor(
                         _characters.emit(_characters.value.filterNot { character ->
                             character == deletedCharacter
                         })
+                        sessionHandler.updateSession()
                     },
                     onFailure = { error ->
 

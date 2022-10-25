@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flow
 
 private const val USER_ID = "0"
 
-internal class SessionManager(val userHandler: UserHandler) : SessionHandler {
+internal class SessionAgent(val userHandler: UserHandler) : SessionHandler {
 
     private var _session: Session? = null
 

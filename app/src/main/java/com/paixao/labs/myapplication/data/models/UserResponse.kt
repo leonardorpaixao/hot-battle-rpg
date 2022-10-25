@@ -36,6 +36,6 @@ data class MasterResponse(
 )
 
 data class TableResponse(
-    val id: String = "",
+    val tableCode: String = "",
     val adventureName: String = "",
 )

@@ -51,7 +51,7 @@ object UserMapper {
     @JvmName("toDomainTableResponse")
     private fun List<TableResponse>.toDomain(): List<Table> = map { tableResponse ->
         Table(
-            id = tableResponse.id,
+            tableCode = tableResponse.tableCode,
             adventureName = tableResponse.adventureName
         )
     }

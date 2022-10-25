@@ -3,9 +3,11 @@
 package com.paixao.labs.myapplication.ui.characters
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +25,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getScreenModel
@@ -55,35 +60,45 @@ internal object CharactersStep : AndroidScreen() {
             Surface(
                 color = MaterialTheme.colors.background
             ) {
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .scrollable(
-                            state = rememberScrollState(),
-                            orientation = Orientation.Vertical
-                        )
-                ) {
-                    Toolbar(title = "Personagens", action = navigator::pop)
-
-                    characters.forEach { character ->
-
-                        CharacterItem(character) {
-                            navigator.push(CharacterDetailsScreen(character))
-                        }
-                    }
-                    Spacer(Modifier.weight(1F))
-
-                    PrimaryButton(
-                        action = {
-                            navigator.push(
-                                CharacterDetailsScreen(
-                                    character = Character.new,
-                                    isNewCharacter = true
-                                )
-                            )
-                        },
-                        text = "Criar novo personagem"
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Image(
+                        painter = painterResource(id = R.drawable.app_login_back_ground),
+                        contentDescription = "",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.FillBounds
                     )
+
+                    Column(
+                        Modifier
+                            .fillMaxSize()
+                            .scrollable(
+                                state = rememberScrollState(),
+                                orientation = Orientation.Vertical
+                            )
+                    ) {
+                        Toolbar(title = "Personagens", action = navigator::pop)
+                        Spacer(
+                            modifier = Modifier.padding(top = Dimens.large)
+                        )
+                        characters.forEach { character ->
+                            CharacterItem(character) {
+                                navigator.push(CharacterDetailsScreen(character))
+                            }
+                        }
+                        Spacer(Modifier.weight(1F))
+
+                        PrimaryButton(
+                            action = {
+                                navigator.push(
+                                    CharacterDetailsScreen(
+                                        character = Character.new,
+                                        isNewCharacter = true
+                                    )
+                                )
+                            },
+                            text = "Criar novo personagem"
+                        )
+                    }
                 }
             }
         }
@@ -95,17 +110,18 @@ private fun AndroidScreen.CharacterItem(character: Character, onClick: (Characte
     val model = getScreenModel<CharactersModel>()
     Card(
         border = BorderStroke(Dimens.strokeSize, color = MaterialTheme.colors.primaryVariant),
-        backgroundColor = MaterialTheme.colors.background,
+        backgroundColor = MaterialTheme.colors.primary,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = Dimens.large),
         onClick = { onClick(character) }
     ) {
         Row(modifier = Modifier.padding(horizontal = Dimens.large, vertical = Dimens.xSmall)) {
-            Text(text = character.name)
+            Text(text = character.name, fontWeight = FontWeight.SemiBold, color = Color.Black)
             Spacer(modifier = Modifier.weight(1F))
             Icon(
                 painter = painterResource(id = R.drawable.ic_trash),
+                tint = Color.Black,
                 contentDescription = "",
                 modifier = Modifier.clickable {
                     model.deleteCharacter(deletedCharacter = character)

@@ -14,6 +14,9 @@ data class Master(
 )
 
 data class Table(
-    val id: String = "",
+    val tableCode: String = "",
     val adventureName: String = "",
+    val adventureSystem: String = "",
+    val lore: String = "",
+    val masterId: String = ""
 )

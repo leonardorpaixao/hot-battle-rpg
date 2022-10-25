@@ -22,9 +22,6 @@ internal class UserAgent(
 ) : UserHandler {
     private val firebaseApi = firebaseDatabase.getReference(MAIN_PATH).child(PATH_SECONDARY)
 
-    override suspend fun retrieveChampion(userId: String): Task<DataSnapshot> =
-        firebaseApi.child(userId).get()
-
     override suspend fun retrieveUser(userId: String): User {
 
         val userResult = runCatching {
@@ -82,8 +79,6 @@ internal class UserAgent(
             .update(mapOf("characters" to FieldValue.arrayUnion(updatedCharacterRequest)))
             .await()
 
-        //
-        println(characterReference)
     }
 
     private companion object {

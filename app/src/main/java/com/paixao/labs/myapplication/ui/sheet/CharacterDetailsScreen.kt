@@ -183,7 +183,7 @@ private fun AttributeRow(
     model: CharacterDetailsScreenModel
 ) {
     var attrState by remember { mutableStateOf(content.value.toString()) }
-    var attrModifier = if(attrState.isBlank()) "0" else attrState
+    val attrModifier = remember(attrState) { if (attrState.isBlank()) "0" else attrState }
 
     Row {
         Text(
