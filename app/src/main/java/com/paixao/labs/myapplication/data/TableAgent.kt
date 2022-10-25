@@ -32,7 +32,7 @@ internal class TableAgent(
             .collection(COLLECTION)
             .document(userId)
             .set(
-                mapOf(MASTER_FIELD to mapOf(TABLES_FIELD to FieldValue.arrayUnion(tableToDelete))),
+                mapOf(MASTER_FIELD to mapOf(TABLES_FIELD to FieldValue.arrayRemove(tableToDelete))),
                 SetOptions.merge()
             )
             .await()

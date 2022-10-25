@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -100,7 +101,10 @@ private fun Screen.TableItem(table: Table) {
             .padding(horizontal = Dimens.large),
         onClick = { }
     ) {
-        Row(modifier = Modifier.padding(horizontal = Dimens.large, vertical = Dimens.xSmall)) {
+        Row(
+            modifier = Modifier.padding(horizontal = Dimens.large, vertical = Dimens.xSmall),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(text = table.adventureName, fontWeight = FontWeight.SemiBold, color = Color.Black)
             Spacer(modifier = Modifier.weight(1F))
 
@@ -109,7 +113,7 @@ private fun Screen.TableItem(table: Table) {
                 tint = Color.Black,
                 contentDescription = "",
                 modifier = Modifier.clickable {
-                    //model.deleteTable()
+                    model.deleteTable(table)
                 })
         }
     }
