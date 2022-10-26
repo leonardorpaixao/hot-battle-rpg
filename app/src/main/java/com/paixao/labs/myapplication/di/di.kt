@@ -11,10 +11,10 @@ import com.paixao.labs.myapplication.data.session.SessionAgent
 import com.paixao.labs.myapplication.domain.services.SessionHandler
 import com.paixao.labs.myapplication.domain.services.TableHandler
 import com.paixao.labs.myapplication.domain.services.UserHandler
-import com.paixao.labs.myapplication.ui.characters.CharactersModel
+import com.paixao.labs.myapplication.ui.characters.CharactersScreenModel
 import com.paixao.labs.myapplication.ui.login.LoginScreenModel
 import com.paixao.labs.myapplication.ui.sheet.CharacterDetailsScreenModel
-import com.paixao.labs.myapplication.ui.table.creation.CreateTableScreenModel
+import com.paixao.labs.myapplication.ui.table.creation.CreateOrEditTableScreenModel
 import com.paixao.labs.myapplication.ui.table.tableListing.TableListingModel
 import com.paixao.labs.myapplication.ui.table.tableLogin.TableLoginScreenModel
 import dagger.Binds
@@ -71,31 +71,31 @@ internal abstract class ModelsAndServices {
     @Binds
     @IntoMap
     @ScreenModelKey(CharacterDetailsScreenModel::class)
-    abstract fun bindCharacterDetailsScreenModel(hiltListScreenModel: CharacterDetailsScreenModel): ScreenModel
+    abstract fun bindCharacterDetailsScreenModel(model: CharacterDetailsScreenModel): ScreenModel
 
     @Binds
     @IntoMap
     @ScreenModelKey(LoginScreenModel::class)
-    abstract fun bindLoginScreenModel(loginScreenModel: LoginScreenModel): ScreenModel
+    abstract fun bindLoginScreenModel(model: LoginScreenModel): ScreenModel
 
     @Binds
     @IntoMap
-    @ScreenModelKey(CharactersModel::class)
-    abstract fun bindCharactersModel(charactersModel: CharactersModel): ScreenModel
+    @ScreenModelKey(CharactersScreenModel::class)
+    abstract fun bindCharactersModel(model: CharactersScreenModel): ScreenModel
 
     @Binds
     @IntoMap
     @ScreenModelKey(TableLoginScreenModel::class)
-    abstract fun bindTableLoginScreenModel(charactersModel: TableLoginScreenModel): ScreenModel
+    abstract fun bindTableLoginScreenModel(model: TableLoginScreenModel): ScreenModel
 
     @Binds
     @IntoMap
     @ScreenModelKey(TableListingModel::class)
-    abstract fun bindTableListingModel(charactersModel: TableListingModel): ScreenModel
+    abstract fun bindTableListingModel(model: TableListingModel): ScreenModel
 
     @Binds
     @IntoMap
-    @ScreenModelKey(CreateTableScreenModel::class)
-    abstract fun bindCreateTableScreenModel(charactersModel: CreateTableScreenModel): ScreenModel
+    @ScreenModelKey(CreateOrEditTableScreenModel::class)
+    abstract fun bindCreateOrEditTableScreenModel(model: CreateOrEditTableScreenModel): ScreenModel
 }
 

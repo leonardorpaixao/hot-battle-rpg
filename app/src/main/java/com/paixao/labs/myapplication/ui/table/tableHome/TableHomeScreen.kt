@@ -28,7 +28,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.paixao.labs.myapplication.R
 import com.paixao.labs.myapplication.ui.table.tableHome.TableHomeScreen.Content
-import com.paixao.labs.myapplication.ui.table.tableListing.TableListing
+import com.paixao.labs.myapplication.ui.table.tableListing.TableListingScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.Toolbar
@@ -59,7 +59,7 @@ object TableHomeScreen : Screen {
                             TableHomeItem("Entrar em uma mesa", {})
                             TableHomeItem(
                                 contentText = "Mestrar uma aventura",
-                                action = { navigator?.push(TableListing) })
+                                action = { navigator?.push(TableListingScreen) })
                         }
                     }
                 }

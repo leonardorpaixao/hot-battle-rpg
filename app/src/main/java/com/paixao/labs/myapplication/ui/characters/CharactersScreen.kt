@@ -47,12 +47,12 @@ import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 import com.paixao.labs.myapplication.ui.utils.components.Toolbar
 
 @ExperimentalUnitApi
-internal object CharactersStep : AndroidScreen() {
+internal object CharactersScreen : AndroidScreen() {
 
     @Composable
     override fun Content() {
 
-        val model = getScreenModel<CharactersModel>()
+        val model = getScreenModel<CharactersScreenModel>()
         val characters = model.characters().collectAsState().value
         val navigator = LocalNavigator.currentOrThrow
 
@@ -111,7 +111,7 @@ internal object CharactersStep : AndroidScreen() {
 
 @Composable
 private fun AndroidScreen.CharacterItem(character: Character, onClick: (Character) -> Unit) {
-    val model = getScreenModel<CharactersModel>()
+    val model = getScreenModel<CharactersScreenModel>()
     Card(
         border = BorderStroke(Dimens.strokeSize, color = MaterialTheme.colors.primaryVariant),
         backgroundColor = MaterialTheme.colors.primary,

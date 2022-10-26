@@ -3,7 +3,6 @@
     <string name="sheet_title">Ficha de %s</string>
 
 
-
     <string name="sheet_str_label">For</string>
     <string name="sheet_dex_label">Dex</string>
     <string name="sheet_con_label">Con</string>
@@ -19,14 +18,11 @@
     <string name="sheet_attack_label">Atacar</string>
     <string name="sheet_save_label">Salvar</string>
     <string name="sheet_changes_was_saved_toast_message">Alterações salvas com sucesso</string>
-
-
+    <string name="creation_table_success_message">Aventura criada com sucesso</string>
 
 
     <string name="login_table_code_label">Código da mesa</string>
     <string name="login_table_code_hint">Digite o código de acesso a mesa</string>
-
-
 
 
 </resources>

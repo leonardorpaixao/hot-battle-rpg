@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-internal class CharactersModel @Inject constructor(
+internal class CharactersScreenModel @Inject constructor(
     private val sessionHandler: SessionHandler,
     private val userHandler: UserHandler,
 ) : ScreenModel {

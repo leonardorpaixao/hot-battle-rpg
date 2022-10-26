@@ -23,24 +23,14 @@ internal class TableListingModel @Inject constructor(
     fun retrieveTables() {
         runBlocking {
             coroutineScope.launch {
-                runCatching {
-                    val session = sessionHandler.getCurrentSession()
-                    if (session.user.master?.tables?.isNotEmpty() == true) {
-                        _tables.value = TableListingState(
-                            isLoading = false,
-                            isEmpty = false,
-                            tables = session.user.master.tables,
-                            error = null
-                        )
-                    } else {
-                        _tables.value = TableListingState(
-                            isLoading = false,
-                            isEmpty = true,
-                        )
-                    }
-                }.fold(
-                    onSuccess = {},
-                    onFailure = { TODO() }
+                val session = sessionHandler.getCurrentSession()
+                _tables.emit(
+                    TableListingState(
+                        isLoading = false,
+                        isEmpty = session.user.master?.tables?.isEmpty() ?: true,
+                        tables = session.user.master?.tables.orEmpty(),
+                        error = null
+                    )
                 )
             }
         }

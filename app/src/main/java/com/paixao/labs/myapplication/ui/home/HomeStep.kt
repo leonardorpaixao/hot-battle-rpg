@@ -33,7 +33,7 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.paixao.labs.myapplication.R
-import com.paixao.labs.myapplication.ui.characters.CharactersStep
+import com.paixao.labs.myapplication.ui.characters.CharactersScreen
 import com.paixao.labs.myapplication.ui.table.tableHome.TableHomeScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
@@ -83,7 +83,7 @@ class HomeStep : AndroidScreen() {
                                     width = Dimens.xxXSmall
                                 ),
                                 modifier = Modifier.clickable {
-                                    navigator.push(CharactersStep)
+                                    navigator.push(CharactersScreen)
                                 }
                             ) {
 
