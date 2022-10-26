@@ -11,7 +11,7 @@ buildscript {
         compose_version = '1.1.0-beta01'
         composeCompiler = '1.1.0-rc02'
         hilt_version = '2.40.5'
-        voyager_version = '1.0.0-beta15'
+        voyager_version = '1.0.0-rc02'
     }
 
     dependencies {
