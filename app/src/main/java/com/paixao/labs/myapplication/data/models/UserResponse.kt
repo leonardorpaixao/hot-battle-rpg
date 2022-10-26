@@ -1,8 +1,5 @@
 package com.paixao.labs.myapplication.data.models
 
-import com.paixao.labs.myapplication.domain.models.Attribute
-import com.paixao.labs.myapplication.domain.models.Attributes
-
 data class UserResponse(
     val id: String = "",
     val name: String = "",
@@ -38,4 +35,7 @@ data class MasterResponse(
 data class TableResponse(
     val tableCode: String = "",
     val adventureName: String = "",
+    val lore: String = "",
+    val adventureSystem: String = "",
+    val masterId: String = ""
 )

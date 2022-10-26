@@ -25,7 +25,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getScreenModel
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
-import com.paixao.labs.myapplication.ui.utils.components.PrimaryButton
+import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 import com.paixao.labs.myapplication.ui.utils.components.Toolbar
 
 object CreateTableScreen : Screen {

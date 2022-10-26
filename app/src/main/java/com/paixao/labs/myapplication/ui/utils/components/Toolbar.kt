@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -30,8 +31,17 @@ fun Toolbar(title: String, action: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colors.primary)
+            .background(
+                shape = RoundedCornerShape(
+                    topStart = 0.dp,
+                    topEnd = 0.dp,
+                    bottomEnd = 8.dp,
+                    bottomStart = 8.dp
+                ),
+                color = MaterialTheme.colors.primary
+            )
             .padding(Dimens.medium)
+
     ) {
         Image(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_back),
@@ -40,8 +50,7 @@ fun Toolbar(title: String, action: () -> Unit = {}) {
             Modifier
                 .align(Alignment.CenterVertically)
                 .clickable(role = Role.Button) { action() },
-
-        )
+            )
         Text(
             text = title,
             textAlign = TextAlign.Start,
@@ -54,6 +63,6 @@ fun Toolbar(title: String, action: () -> Unit = {}) {
 
 @Preview
 @Composable
-private fun Preview(){
+private fun Preview() {
     Toolbar(title = "Exemplo de toolbar")
 }

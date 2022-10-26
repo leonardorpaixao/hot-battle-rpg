@@ -52,7 +52,10 @@ object UserMapper {
     private fun List<TableResponse>.toDomain(): List<Table> = map { tableResponse ->
         Table(
             tableCode = tableResponse.tableCode,
-            adventureName = tableResponse.adventureName
+            adventureName = tableResponse.adventureName,
+            lore = tableResponse.lore,
+            adventureSystem = tableResponse.adventureSystem,
+            masterId = tableResponse.masterId
         )
     }
 

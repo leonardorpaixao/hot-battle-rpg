@@ -32,7 +32,7 @@ import com.paixao.labs.myapplication.domain.models.LoginResultState
 import com.paixao.labs.myapplication.ui.home.HomeStep
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
-import com.paixao.labs.myapplication.ui.utils.components.PrimaryButton
+import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 
 @ExperimentalUnitApi
 class LoginScreen : AndroidScreen() {

@@ -32,7 +32,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
@@ -44,7 +43,7 @@ import com.paixao.labs.myapplication.domain.models.Character
 import com.paixao.labs.myapplication.ui.sheet.CharacterDetailsScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
-import com.paixao.labs.myapplication.ui.utils.components.PrimaryButton
+import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 import com.paixao.labs.myapplication.ui.utils.components.Toolbar
 
 @ExperimentalUnitApi
@@ -118,7 +117,7 @@ private fun AndroidScreen.CharacterItem(character: Character, onClick: (Characte
         backgroundColor = MaterialTheme.colors.primary,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = Dimens.large),
+            .padding(horizontal = Dimens.large, vertical = Dimens.xxXSmall),
         onClick = { onClick(character) }
     ) {
         Row(

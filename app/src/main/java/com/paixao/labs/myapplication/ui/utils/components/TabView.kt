@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import com.paixao.labs.myapplication.R
+import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 
 @OptIn(ExperimentalUnitApi::class)
 

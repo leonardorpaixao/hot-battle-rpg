@@ -49,7 +49,7 @@ import com.paixao.labs.myapplication.domain.models.Race
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.NameAndLevelRow
-import com.paixao.labs.myapplication.ui.utils.components.PrimaryButton
+import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 import com.paixao.labs.myapplication.ui.utils.components.Toolbar
 import kotlinx.coroutines.launch
 

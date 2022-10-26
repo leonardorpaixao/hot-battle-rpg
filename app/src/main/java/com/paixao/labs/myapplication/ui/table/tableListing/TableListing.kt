@@ -34,10 +34,11 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import com.paixao.labs.myapplication.R
 import com.paixao.labs.myapplication.domain.models.Table
 import com.paixao.labs.myapplication.ui.table.creation.CreateTableScreen
+import com.paixao.labs.myapplication.ui.table.tableDetails.TableDetailsScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
-import com.paixao.labs.myapplication.ui.utils.components.PrimaryButton
 import com.paixao.labs.myapplication.ui.utils.components.Toolbar
+import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 
 object TableListing : Screen {
 
@@ -92,6 +93,7 @@ private fun Screen.TableListingContent() {
 @Composable
 private fun Screen.TableItem(table: Table) {
     val model = getScreenModel<TableListingModel>()
+    val navigator = LocalNavigator.current
 
     Card(
         border = BorderStroke(Dimens.strokeSize, color = MaterialTheme.colors.primaryVariant),
@@ -99,7 +101,7 @@ private fun Screen.TableItem(table: Table) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = Dimens.large),
-        onClick = { }
+        onClick = { navigator?.push(TableDetailsScreen(table)) }
     ) {
         Row(
             modifier = Modifier.padding(horizontal = Dimens.large, vertical = Dimens.xSmall),
