@@ -23,7 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
-import cafe.adriel.voyager.androidx.AndroidScreen
+import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -35,7 +35,7 @@ import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 
 @ExperimentalUnitApi
-class LoginScreen : AndroidScreen() {
+class LoginScreen : Screen {
 
     @Composable
     override fun Content() {
@@ -65,7 +65,8 @@ class LoginScreen : AndroidScreen() {
                             action = {
                                 model.login()
                             },
-                            text = "Login"
+                            text = "Login",
+                            isBackGroundInvisible = true
                         )
                     }
                 )
@@ -76,43 +77,44 @@ class LoginScreen : AndroidScreen() {
 
 @Composable
 private fun ScreenContent(loginResultState: LoginResultState) {
+    SheetTheme() {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Image(
+                painter = painterResource(id = R.drawable.app_login_back_ground),
+                contentDescription = "",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = R.drawable.app_login_back_ground),
-            contentDescription = "",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )
+            if (loginResultState.isLoading)
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
 
-        if (loginResultState.isLoading)
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(Dimens.xxXLarge),
+                        color = MaterialTheme.colors.primaryVariant
+                    )
+                }
+
             Column(
                 modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
             ) {
-
-                CircularProgressIndicator(
-                    modifier = Modifier.size(Dimens.xxXLarge),
-                    color = MaterialTheme.colors.primaryVariant
-                )
-            }
-
-        Column(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            Card(
-                backgroundColor = Color.White,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.xxXLarge)
-                    .padding(top = Dimens.xxXFkLarge),
-                contentColor = MaterialTheme.colors.primaryVariant,
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_logo), contentDescription = "",
-                    modifier = Modifier.background(MaterialTheme.colors.primary)
-                )
+                Card(
+                    backgroundColor = Color.White,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Dimens.xxXLarge)
+                        .padding(top = Dimens.xxXFkLarge),
+                    contentColor = MaterialTheme.colors.primaryVariant,
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_logo), contentDescription = "",
+                        modifier = Modifier.background(MaterialTheme.colors.primary)
+                    )
+                }
             }
         }
     }

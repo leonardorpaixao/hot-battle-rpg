@@ -17,7 +17,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,14 +37,12 @@ import com.paixao.labs.myapplication.ui.table.tableHome.TableHomeScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
-import kotlinx.coroutines.launch
 
 @ExperimentalUnitApi
 class HomeStep : AndroidScreen() {
 
     @Composable
     override fun Content() {
-        val scope = rememberCoroutineScope()
         val navigator = LocalNavigator.currentOrThrow
 
 
@@ -99,12 +96,13 @@ class HomeStep : AndroidScreen() {
                             }
                         }
                         Spacer(modifier = Modifier.weight(1F))
-                        PrimaryButton(action = {
-                            scope.launch {
+                        PrimaryButton(
+                            text = "Entrar numa aventura",
+                            isBackGroundInvisible = true,
+                            action = {
                                 navigator.push(TableHomeScreen)
-                            }
-
-                        }, text = "Entrar numa aventura")
+                            },
+                        )
                     }
                 }
 

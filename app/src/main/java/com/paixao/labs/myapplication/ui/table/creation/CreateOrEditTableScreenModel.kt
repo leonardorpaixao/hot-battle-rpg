@@ -35,6 +35,14 @@ internal class CreateOrEditTableScreenModel @Inject constructor(
         _newTable = _newTable.copy(lore = newLore)
     }
 
+    fun resetStates() {
+        runBlocking {
+            coroutineScope.launch {
+                _tableCreationState.emit(TableEditOrCreationScreenState())
+            }
+        }
+    }
+
     fun createTable() {
         runBlocking {
             coroutineScope.launch {
