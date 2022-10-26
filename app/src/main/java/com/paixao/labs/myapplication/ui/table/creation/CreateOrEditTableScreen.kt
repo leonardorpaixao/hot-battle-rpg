@@ -66,11 +66,13 @@ data class CreateOrEditTableScreen(val table: Table? = null) : Screen {
             if (tableResult.createdTable != null) {
                 navigator?.pop()
                 navigator?.push(TableDetailsScreen(tableResult.createdTable))
+                model.resetStates()
             }
 
             if (tableResult.updatedTable != null) {
                 navigator?.popUntil { screen -> screen is TableListingScreen }
                 navigator?.push(TableDetailsScreen(tableResult.updatedTable))
+                model.resetStates()
             }
 
             CreateOrEditContent(
