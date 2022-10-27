@@ -13,8 +13,9 @@ import com.paixao.labs.myapplication.domain.services.TableHandler
 import com.paixao.labs.myapplication.domain.services.UserHandler
 import com.paixao.labs.myapplication.ui.characters.CharactersScreenModel
 import com.paixao.labs.myapplication.ui.login.LoginScreenModel
-import com.paixao.labs.myapplication.ui.sheet.CharacterDetailsScreenModel
-import com.paixao.labs.myapplication.ui.table.creation.CreateOrEditTableScreenModel
+import com.paixao.labs.myapplication.ui.sheet.CharacterScreenModel
+import com.paixao.labs.myapplication.ui.table.creationAndEdit.CreateOrEditTableScreenModel
+import com.paixao.labs.myapplication.ui.table.session.TableSessionScreenModel
 import com.paixao.labs.myapplication.ui.table.tableListing.TableListingModel
 import com.paixao.labs.myapplication.ui.table.tableLogin.TableLoginScreenModel
 import dagger.Binds
@@ -70,8 +71,8 @@ internal abstract class ModelsAndServices {
 
     @Binds
     @IntoMap
-    @ScreenModelKey(CharacterDetailsScreenModel::class)
-    abstract fun bindCharacterDetailsScreenModel(model: CharacterDetailsScreenModel): ScreenModel
+    @ScreenModelKey(CharacterScreenModel::class)
+    abstract fun bindCharacterDetailsScreenModel(model: CharacterScreenModel): ScreenModel
 
     @Binds
     @IntoMap
@@ -97,5 +98,10 @@ internal abstract class ModelsAndServices {
     @IntoMap
     @ScreenModelKey(CreateOrEditTableScreenModel::class)
     abstract fun bindCreateOrEditTableScreenModel(model: CreateOrEditTableScreenModel): ScreenModel
+
+    @Binds
+    @IntoMap
+    @ScreenModelKey(TableSessionScreenModel::class)
+    abstract fun bindTableSessionScreenModel(model: TableSessionScreenModel): ScreenModel
 }
 

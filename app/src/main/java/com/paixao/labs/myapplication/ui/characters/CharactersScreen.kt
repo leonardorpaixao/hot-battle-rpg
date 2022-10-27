@@ -1,13 +1,14 @@
-@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialApi::class)
+@file:OptIn(
+    ExperimentalMaterialApi::class, ExperimentalMaterialApi::class,
+    ExperimentalUnitApi::class
+)
 
 package com.paixao.labs.myapplication.ui.characters
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,12 +30,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.androidx.AndroidScreen
+import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -43,11 +44,11 @@ import com.paixao.labs.myapplication.domain.models.Character
 import com.paixao.labs.myapplication.ui.sheet.CharacterDetailsScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
-import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 import com.paixao.labs.myapplication.ui.utils.components.Toolbar
+import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 
 @ExperimentalUnitApi
-internal object CharactersScreen : AndroidScreen() {
+internal object CharactersScreen : Screen {
 
     @Composable
     override fun Content() {
@@ -59,59 +60,70 @@ internal object CharactersScreen : AndroidScreen() {
         LaunchedEffect(model) {
             model.retrieveCharacters()
         }
+        CharactersContent(
+            characters = characters,
+            deleteCharacter = model::deleteCharacter
+        )
 
-        SheetTheme {
-            Surface(
-                color = MaterialTheme.colors.background
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Image(
-                        painter = painterResource(id = R.drawable.app_login_back_ground),
-                        contentDescription = "",
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.FillBounds
+    }
+}
+
+@Composable
+private fun CharactersContent(
+    characters: List<Character>,
+    deleteCharacter: (Character) -> Unit,
+
+    ) {
+    val navigator = LocalNavigator.current
+
+    SheetTheme {
+        Surface(
+            color = MaterialTheme.colors.background
+        ) {
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .scrollable(
+                        state = rememberScrollState(),
+                        orientation = Orientation.Vertical
                     )
-
-                    Column(
-                        Modifier
-                            .fillMaxSize()
-                            .scrollable(
-                                state = rememberScrollState(),
-                                orientation = Orientation.Vertical
-                            )
-                    ) {
-                        Toolbar(title = "Personagens", action = navigator::pop)
-                        Spacer(
-                            modifier = Modifier.padding(top = Dimens.large)
-                        )
-                        characters.forEach { character ->
-                            CharacterItem(character) {
-                                navigator.push(CharacterDetailsScreen(character))
-                            }
-                        }
-                        Spacer(Modifier.weight(1F))
-
-                        PrimaryButton(
-                            action = {
-                                navigator.push(
-                                    CharacterDetailsScreen(
-                                        character = Character.new,
-                                        isNewCharacter = true
-                                    )
-                                )
-                            },
-                            text = "Criar novo personagem"
-                        )
-                    }
+            ) {
+                Toolbar(title = "Personagens", action = { navigator?.pop() })
+                Spacer(
+                    modifier = Modifier.padding(top = Dimens.large)
+                )
+                characters.forEach { character ->
+                    CharacterItem(
+                        character = character,
+                        onClick = { navigator?.push(CharacterDetailsScreen(character)) },
+                        deleteCharacter = { characterToDelete ->
+                            deleteCharacter(characterToDelete)
+                        })
                 }
+                Spacer(Modifier.weight(1F))
+
+                PrimaryButton(
+                    action = {
+                        navigator?.push(
+                            CharacterDetailsScreen(
+                                character = Character.new,
+                                isNewCharacter = true
+                            )
+                        )
+                    },
+                    text = "Criar novo personagem"
+                )
             }
         }
     }
 }
 
 @Composable
-private fun AndroidScreen.CharacterItem(character: Character, onClick: (Character) -> Unit) {
-    val model = getScreenModel<CharactersScreenModel>()
+private fun CharacterItem(
+    character: Character,
+    onClick: (Character) -> Unit,
+    deleteCharacter: (Character) -> Unit
+) {
     Card(
         border = BorderStroke(Dimens.strokeSize, color = MaterialTheme.colors.primaryVariant),
         backgroundColor = MaterialTheme.colors.primary,
@@ -134,10 +146,17 @@ private fun AndroidScreen.CharacterItem(character: Character, onClick: (Characte
                     .padding(Dimens.xXSmall)
                     .shadow(elevation = Dimens.strokeSize, shape = RoundedCornerShape(50.dp))
                     .clickable {
-                        model.deleteCharacter(deletedCharacter = character)
+                        deleteCharacter(character)
                     })
         }
 
     }
+}
+
+@Preview
+@Composable
+private fun PreviewCharactersScreen() {
+    val characters = listOf(Character(name = "ReLL1k", id = ""), Character(name = "Lylie", id = ""))
+    CharactersContent(characters = characters, deleteCharacter = {})
 }
 

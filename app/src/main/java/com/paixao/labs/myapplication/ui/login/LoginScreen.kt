@@ -29,7 +29,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.paixao.labs.myapplication.R
 import com.paixao.labs.myapplication.domain.models.LoginResultState
-import com.paixao.labs.myapplication.ui.home.HomeStep
+import com.paixao.labs.myapplication.ui.home.HomeScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
@@ -49,7 +49,7 @@ class LoginScreen : Screen {
         val loginState = model.retrieveLoginStatus().collectAsState().value
 
         if (loginState.success != null)
-            navigator.push(HomeStep())
+            navigator.push(HomeScreen())
 
 
         SheetTheme {

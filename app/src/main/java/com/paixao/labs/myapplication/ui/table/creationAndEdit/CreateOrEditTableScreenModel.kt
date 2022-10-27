@@ -1,4 +1,4 @@
-package com.paixao.labs.myapplication.ui.table.creation
+package com.paixao.labs.myapplication.ui.table.creationAndEdit
 
 import android.util.Log
 import cafe.adriel.voyager.core.model.ScreenModel

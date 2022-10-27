@@ -1,4 +1,4 @@
-package com.paixao.labs.myapplication.ui.utils.components
+package com.paixao.labs.myapplication.ui.sheet.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -97,7 +97,6 @@ fun NameAndLevelRow(
         }
     }
 }
-
 private object LevelFieldRule : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val formattedText = if (text.isNotBlank()) AnnotatedString(

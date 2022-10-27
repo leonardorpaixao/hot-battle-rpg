@@ -46,9 +46,9 @@ import com.paixao.labs.myapplication.domain.models.Attributes
 import com.paixao.labs.myapplication.domain.models.Character
 import com.paixao.labs.myapplication.domain.models.JobClass
 import com.paixao.labs.myapplication.domain.models.Race
+import com.paixao.labs.myapplication.ui.sheet.components.NameAndLevelRow
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
-import com.paixao.labs.myapplication.ui.utils.components.NameAndLevelRow
 import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 import com.paixao.labs.myapplication.ui.utils.components.Toolbar
 import kotlinx.coroutines.launch
@@ -88,7 +88,7 @@ private fun AndroidScreen.Sheet(
     character: Character,
     isNewCharacter: Boolean
 ) {
-    val model = getScreenModel<CharacterDetailsScreenModel>()
+    val model = getScreenModel<CharacterScreenModel>()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val navigator = LocalNavigator.currentOrThrow
@@ -157,7 +157,7 @@ private fun AndroidScreen.Sheet(
 }
 
 @Composable
-private fun AttributesField(attributes: Attributes, model: CharacterDetailsScreenModel) {
+private fun AttributesField(attributes: Attributes, model: CharacterScreenModel) {
     Text(
         modifier = Modifier
             .padding(horizontal = Dimens.xLarge)
@@ -180,7 +180,7 @@ private fun AttributesField(attributes: Attributes, model: CharacterDetailsScree
 private fun AttributeRow(
     label: String,
     content: Attribute,
-    model: CharacterDetailsScreenModel
+    model: CharacterScreenModel
 ) {
     var attrState by remember { mutableStateOf(content.value.toString()) }
     val attrModifier = remember(attrState) { if (attrState.isBlank()) "0" else attrState }

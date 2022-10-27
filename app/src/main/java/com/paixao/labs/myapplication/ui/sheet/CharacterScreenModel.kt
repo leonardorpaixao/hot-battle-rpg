@@ -13,7 +13,7 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
-internal class CharacterDetailsScreenModel @Inject constructor(
+internal class CharacterScreenModel @Inject constructor(
     private val userHandler: UserHandler,
     private val sessionHandler: SessionHandler,
 ) : ScreenModel {
@@ -105,7 +105,7 @@ internal class CharacterDetailsScreenModel @Inject constructor(
         else editCharacter(oldCharacter)
     }
 
-    fun editCharacter(oldCharacter: Character): Unit {
+    fun editCharacter(oldCharacter: Character) {
         if ((_oldCharacter ?: oldCharacter) == _characterSheet) return
         runBlocking {
             coroutineScope.launch {
@@ -125,7 +125,7 @@ internal class CharacterDetailsScreenModel @Inject constructor(
                         sessionHandler.updateSession()
                     },
                     onFailure = { error ->
-
+                        println(error)
                     }
                 )
 

@@ -1,6 +1,5 @@
-package com.paixao.labs.myapplication.ui.table.creation
+package com.paixao.labs.myapplication.ui.table.creationAndEdit
 
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,14 +27,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.paixao.labs.myapplication.R
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.paixao.labs.myapplication.domain.models.Table
 import com.paixao.labs.myapplication.ui.table.tableDetails.TableDetailsScreen
 import com.paixao.labs.myapplication.ui.table.tableListing.TableListingScreen
@@ -49,7 +47,7 @@ data class CreateOrEditTableScreen(val table: Table? = null) : Screen {
     override fun Content() {
         val model = getScreenModel<CreateOrEditTableScreenModel>()
         val tableResult = model.tableCreationState.collectAsState().value
-        val navigator = LocalNavigator.current
+        val navigator = LocalNavigator.currentOrThrow
 
         LaunchedEffect(table) {
             if (table != null) model.setupModel(table)
@@ -64,14 +62,14 @@ data class CreateOrEditTableScreen(val table: Table? = null) : Screen {
             }
 
             if (tableResult.createdTable != null) {
-                navigator?.pop()
-                navigator?.push(TableDetailsScreen(tableResult.createdTable))
+                navigator.pop()
+                navigator.push(TableDetailsScreen(tableResult.createdTable))
                 model.resetStates()
             }
 
             if (tableResult.updatedTable != null) {
-                navigator?.popUntil { screen -> screen is TableListingScreen }
-                navigator?.push(TableDetailsScreen(tableResult.updatedTable))
+                navigator.popUntil { screen -> screen is TableListingScreen }
+                navigator.push(TableDetailsScreen(tableResult.updatedTable))
                 model.resetStates()
             }
 
@@ -94,7 +92,7 @@ private fun CreateOrEditContent(
     createTable: () -> Unit,
     updateTable: () -> Unit,
 ) {
-    val navigator = LocalNavigator.current
+    val navigator = LocalNavigator.currentOrThrow
 
     val isOnEditFLow = remember(table) {
         table != null
@@ -125,7 +123,7 @@ private fun CreateOrEditContent(
                         .verticalScroll(rememberScrollState())
 
                 ) {
-                    Toolbar(title = toolbarTitle, action = { navigator?.pop() })
+                    Toolbar(title = toolbarTitle, action = { navigator.pop() })
                     Spacer(modifier = Modifier.padding(top = Dimens.large))
                     Column(
                         Modifier

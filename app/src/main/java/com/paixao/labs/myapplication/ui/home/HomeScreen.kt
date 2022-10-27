@@ -39,7 +39,7 @@ import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 
 @ExperimentalUnitApi
-class HomeStep : AndroidScreen() {
+class HomeScreen : AndroidScreen() {
 
     @Composable
     override fun Content() {

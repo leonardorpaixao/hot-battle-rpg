@@ -28,13 +28,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.paixao.labs.myapplication.R
 import com.paixao.labs.myapplication.domain.models.Table
-import com.paixao.labs.myapplication.ui.table.creation.CreateOrEditTableScreen
+import com.paixao.labs.myapplication.ui.table.creationAndEdit.CreateOrEditTableScreen
+import com.paixao.labs.myapplication.ui.table.session.TableSessionScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
 import com.paixao.labs.myapplication.ui.utils.components.Toolbar
 import com.paixao.labs.myapplication.ui.utils.components.buttons.ButtonStack
+
+private const val SPACER_WEIGHT = 0.25F
 
 internal data class TableDetailsScreen(val table: Table) : Screen {
 
@@ -46,7 +50,7 @@ internal data class TableDetailsScreen(val table: Table) : Screen {
 
 @Composable
 private fun TableDetails(table: Table) {
-    val navigator = LocalNavigator.current
+    val navigator = LocalNavigator.currentOrThrow
     SheetTheme() {
         Surface {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomStart) {
@@ -98,7 +102,7 @@ private fun TableDetails(table: Table) {
                                 fontWeight = FontWeight.SemiBold
                             )
                         }
-                        Spacer(modifier = Modifier.weight(0.25f))
+                        Spacer(modifier = Modifier.weight(SPACER_WEIGHT))
 
                         Column(
                             Modifier
@@ -143,9 +147,9 @@ private fun TableDetails(table: Table) {
                 }
                 ButtonStack(
                     leftButtonText = "Editar",
-                    leftButtonAction = { navigator?.push(CreateOrEditTableScreen(table)) },
+                    leftButtonAction = { navigator.push(CreateOrEditTableScreen(table)) },
                     rightButtonText = "Iniciar Sessão",
-                    rightButtonAction = { },
+                    rightButtonAction = { navigator.push(TableSessionScreen(table)) },
                 )
             }
         }

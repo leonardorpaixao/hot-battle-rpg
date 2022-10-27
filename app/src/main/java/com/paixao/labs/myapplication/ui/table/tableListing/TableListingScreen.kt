@@ -28,9 +28,10 @@ import androidx.compose.ui.text.font.FontWeight
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.paixao.labs.myapplication.R
 import com.paixao.labs.myapplication.domain.models.Table
-import com.paixao.labs.myapplication.ui.table.creation.CreateOrEditTableScreen
+import com.paixao.labs.myapplication.ui.table.creationAndEdit.CreateOrEditTableScreen
 import com.paixao.labs.myapplication.ui.table.tableDetails.TableDetailsScreen
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
@@ -53,11 +54,11 @@ object TableListingScreen : Screen {
 @Composable
 private fun Screen.TableListingContent() {
     val model = getScreenModel<TableListingModel>()
-    val navigator = LocalNavigator.current
+    val navigator = LocalNavigator.currentOrThrow
     val tables = model.tables.collectAsState().value
 
     val toolbarTitle = remember(tables) {
-        if (!tables.isEmpty) "Escolha a mesa para mestrar" else "Mesas"
+        if (!tables.isEmpty) "Escolha uma aventura" else "Aventuras"
     }
 
     LaunchedEffect(model) {
@@ -74,7 +75,10 @@ private fun Screen.TableListingContent() {
         // else TODO(Create EmptyState() screen)
 
         Spacer(Modifier.weight(1F))
-        PrimaryButton(action = { navigator?.push(CreateOrEditTableScreen()) }, text = "Criar aventura")
+        PrimaryButton(
+            action = { navigator.push(CreateOrEditTableScreen()) },
+            text = "Criar aventura"
+        )
     }
 }
 
@@ -82,7 +86,7 @@ private fun Screen.TableListingContent() {
 @Composable
 private fun Screen.TableItem(table: Table) {
     val model = getScreenModel<TableListingModel>()
-    val navigator = LocalNavigator.current
+    val navigator = LocalNavigator.currentOrThrow
 
     Card(
         border = BorderStroke(Dimens.strokeSize, color = MaterialTheme.colors.primaryVariant),
@@ -90,7 +94,7 @@ private fun Screen.TableItem(table: Table) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = Dimens.large),
-        onClick = { navigator?.push(TableDetailsScreen(table)) }
+        onClick = { navigator.push(TableDetailsScreen(table)) }
     ) {
         Row(
             modifier = Modifier.padding(horizontal = Dimens.large, vertical = Dimens.xSmall),

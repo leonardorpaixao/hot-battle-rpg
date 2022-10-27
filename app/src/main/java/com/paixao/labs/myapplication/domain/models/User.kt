@@ -18,5 +18,6 @@ data class Table(
     val adventureName: String = "",
     val adventureSystem: String = "",
     val lore: String = "",
-    val masterId: String = ""
+    val masterId: String = "",
+    val masterName: String = ""
 )
