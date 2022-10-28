@@ -1,4 +1,4 @@
-package com.paixao.labs.myapplication.data.session
+package com.paixao.labs.myapplication.data
 
 import android.util.Log
 import com.paixao.labs.myapplication.domain.models.LoginResultState

@@ -153,7 +153,6 @@ private fun TableDetails(table: Table) {
                 )
             }
         }
-
     }
 }
 

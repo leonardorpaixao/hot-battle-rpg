@@ -20,7 +20,6 @@ internal class UserAgent(
     private val firebaseDatabase: FirebaseDatabase,
     private val firebaseFireStore: FirebaseFirestore,
 ) : UserHandler {
-    private val firebaseApi = firebaseDatabase.getReference(MAIN_PATH).child(PATH_SECONDARY)
 
     override suspend fun retrieveUser(userId: String): User {
 

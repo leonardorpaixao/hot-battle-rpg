@@ -5,9 +5,11 @@ import cafe.adriel.voyager.hilt.ScreenModelKey
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.paixao.labs.myapplication.data.SessionAgent
 import com.paixao.labs.myapplication.data.TableAgent
 import com.paixao.labs.myapplication.data.UserAgent
-import com.paixao.labs.myapplication.data.session.SessionAgent
+import com.paixao.labs.myapplication.data.models.AdventureSessionAgent
+import com.paixao.labs.myapplication.domain.services.AdventureSessionHandler
 import com.paixao.labs.myapplication.domain.services.SessionHandler
 import com.paixao.labs.myapplication.domain.services.TableHandler
 import com.paixao.labs.myapplication.domain.services.UserHandler
@@ -53,12 +55,18 @@ internal class SingletonModule {
         )
     }
 
-
+    @Provides
+    @Singleton
+    fun retrieveAdventureSessionHandler(): AdventureSessionAgent =
+        AdventureSessionAgent(firebaseDatabase = Firebase.database)
 }
 
 @Module
 @InstallIn(ActivityComponent::class)
 internal abstract class ModelsAndServices {
+
+    @Binds
+    abstract fun bindAdventureSessionHandler(userAgent: AdventureSessionAgent): AdventureSessionHandler
 
     @Binds
     abstract fun bindUserHandler(userAgent: UserAgent): UserHandler

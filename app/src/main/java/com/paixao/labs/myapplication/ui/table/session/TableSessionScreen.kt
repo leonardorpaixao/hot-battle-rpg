@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,6 +41,10 @@ data class TableSessionScreen(val table: Table) : Screen {
         val model = getScreenModel<TableSessionScreenModel>()
 
         val direction = model.characterPosition.collectAsState().value
+
+        LaunchedEffect(model){
+            model.retrieveAdventureSession()
+        }
 
         TableSessionScreenContent(
             table = Table(),
