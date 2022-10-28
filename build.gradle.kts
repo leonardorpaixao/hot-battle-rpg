@@ -15,7 +15,6 @@ buildscript {
     }
 }
 plugins {
-    // FIXME: plugin declaration using catalogs is not working, figure out why
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlin.linter) apply true
