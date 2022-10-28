@@ -42,46 +42,50 @@ android {
 
 dependencies {
 
-    implementation("androidx.compose.compiler:compiler:1.3.2")
-    implementation("androidx.compose.runtime:runtime:1.3.0-rc01")
-    implementation("androidx.compose.ui:ui:1.3.0-rc01")
-    implementation("androidx.compose.material:material:1.3.0-rc01")
-    implementation("androidx.compose.material:material-icons-core:1.3.0-rc01")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.3.0-rc01")
-    implementation("androidx.compose.animation:animation:1.3.0-rc01")
+    // Compose
+    implementation(libs.compose.compiler)
+    implementation(libs.compose.runtime)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material.core)
+    implementation(libs.compose.material.icons)
+    implementation(libs.compose.preview)
+    implementation(libs.compose.animation)
+    implementation(libs.compose.activity)
 
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.0-rc01")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.0-rc01")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.3.0-rc01")
+    // Compose Debug & Testing
+    androidTestImplementation(libs.compose.test.junit)
+    debugImplementation(libs.compose.debug.manifest)
+    debugImplementation(libs.compose.debug.tooling)
 
-    implementation("androidx.activity:activity-compose:1.6.0")
+    // AndroidX
+    implementation(libs.androidX.core.ktx)
+    implementation(libs.androidX.lifecycle.runtime)
 
-    implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    // Testing
+    testImplementation(libs.testing.junit)
+    testImplementation(libs.testing.mockk)
 
-    implementation("com.google.dagger:hilt-android:2.40.5")
-    kapt("com.google.dagger:hilt-compiler:2.40.5")
+    // Ui Testing
+    androidTestImplementation(libs.uiTesting.junit)
+    androidTestImplementation(libs.uiTesting.espresso)
+
+    // Hilt
+    implementation(libs.hilt.core)
+    kapt(libs.hilt.kapt)
 
     //navigation
 
-    implementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc02")
-    implementation("cafe.adriel.voyager:voyager-transitions:1.0.0-rc02")
-    implementation("cafe.adriel.voyager:voyager-hilt:1.0.0-rc02")
-    implementation("cafe.adriel.voyager:voyager-androidx:1.0.0-rc02")
+    implementation(libs.voyager.navigator)
+    implementation(libs.voyager.transition)
+    implementation(libs.voyager.hilt)
+    implementation(libs.voyager.androidX)
 
-
-    implementation(platform("com.google.firebase:firebase-bom:30.5.0"))
-    implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation("com.google.firebase:firebase-database-ktx")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:20.3.0")
-
-    testImplementation("io.mockk:mockk:1.13.2")
-
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.coroutines)
+    implementation(libs.firebase.auth)
+    implementation(libs.google.playservices.auth)
 }
 
 kapt {

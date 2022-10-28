@@ -23,11 +23,3 @@ plugins {
 tasks.register("clean") {
     delete(rootProject.buildDir)
 }
-
-//ext {
-//    compose_version = '1.3.0-rc01'
-//    compose_version_compiler = '1.3.2'
-//    composeCompiler = '1.1.0-rc02'
-//    hilt_version = '2.40.5'
-//    voyager_version = '1.0.0-rc02'
-//}
