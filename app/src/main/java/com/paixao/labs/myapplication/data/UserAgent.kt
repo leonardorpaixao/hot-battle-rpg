@@ -1,8 +1,6 @@
 package com.paixao.labs.myapplication.data
 
-import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.FirebaseDatabase
+
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
@@ -17,7 +15,6 @@ import java.time.Instant
 import java.util.Date
 
 internal class UserAgent(
-    private val firebaseDatabase: FirebaseDatabase,
     private val firebaseFireStore: FirebaseFirestore,
 ) : UserHandler {
 
@@ -25,7 +22,7 @@ internal class UserAgent(
 
         val userResult = runCatching {
             firebaseFireStore
-                .collection("users")
+                .collection(MAIN_COLLECTION)
                 .document(userId)
                 .get()
                 .await()
@@ -34,7 +31,7 @@ internal class UserAgent(
         }
 
         return userResult.fold(
-            onSuccess = { it ?: error("User not found") },
+            onSuccess = { it ?: error(ERROR_MESSAGE) },
             onFailure = { error(it) }
         )
     }
@@ -42,18 +39,18 @@ internal class UserAgent(
     override suspend fun createCharacter(userId: String, newCharacterData: Character) {
         val characterId = Date.from(Instant.now()).time.toString()
         val characterRequest = CharacterRequestMapper(newCharacterData.copy(id = characterId))
-        firebaseFireStore.collection(PATH_SECONDARY)
+        firebaseFireStore.collection(MAIN_COLLECTION)
             .document(userId)
-            .update(mapOf("characters" to FieldValue.arrayUnion(characterRequest)))
+            .update(mapOf(CHARACTERS_OBJ_REF to FieldValue.arrayUnion(characterRequest)))
             .await()
     }
 
-    /**Para remover um objeto de um array, basta que passemos a referencia exata daquele objeto**/
+    /**To remove some object in an array, we have to send a similar reference of the object that we want to delete**/
     override suspend fun deleteCharacter(userId: String, characterToDelete: Character) {
         val characterRequest = CharacterRequestMapper(characterToDelete)
-        firebaseFireStore.collection(PATH_SECONDARY)
+        firebaseFireStore.collection(MAIN_COLLECTION)
             .document(userId)
-            .update(mapOf("characters" to FieldValue.arrayRemove(characterRequest)))
+            .update(mapOf(CHARACTERS_OBJ_REF to FieldValue.arrayRemove(characterRequest)))
             .await()
     }
 
@@ -62,7 +59,7 @@ internal class UserAgent(
         newCharacterData: Character,
         oldCharacterData: Character
     ) {
-        val characterReference = firebaseFireStore.collection(PATH_SECONDARY)
+        val characterReference = firebaseFireStore.collection(MAIN_COLLECTION)
             .document(userId)
 
         val updatedCharacterRequest = CharacterRequestMapper(newCharacterData)
@@ -71,18 +68,19 @@ internal class UserAgent(
 
 
         characterReference
-            .update(mapOf("characters" to FieldValue.arrayRemove(removeCharacterRequest)))
+            .update(mapOf(CHARACTERS_OBJ_REF to FieldValue.arrayRemove(removeCharacterRequest)))
             .await()
 
         characterReference
-            .update(mapOf("characters" to FieldValue.arrayUnion(updatedCharacterRequest)))
+            .update(mapOf(CHARACTERS_OBJ_REF to FieldValue.arrayUnion(updatedCharacterRequest)))
             .await()
 
     }
 
     private companion object {
-        const val MAIN_PATH = "mesa"
-        const val PATH_SECONDARY = "users"
+        const val ERROR_MESSAGE = "User not found"
+        const val MAIN_COLLECTION = "users"
+        const val CHARACTERS_OBJ_REF = "characters"
     }
 }
 

@@ -50,7 +50,6 @@ internal class SingletonModule {
     @Singleton
     fun retrieveUserAgent(): UserAgent {
         return UserAgent(
-            firebaseDatabase = Firebase.database,
             firebaseFireStore = Firebase.firestore,
         )
     }
