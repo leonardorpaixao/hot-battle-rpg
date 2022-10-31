@@ -9,5 +9,4 @@ object TableLognScreen : Screen {
     override fun Content() {
         TODO("Not yet implemented")
     }
-
 }

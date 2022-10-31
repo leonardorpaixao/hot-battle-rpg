@@ -6,13 +6,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-class TableLoginScreenModel @Inject constructor(): ScreenModel {
+class TableLoginScreenModel @Inject constructor() : ScreenModel {
 
     private val _tableState = MutableStateFlow<TableLoginState>(TableLoginState(isLoading = true))
     val tableState = _tableState.asStateFlow()
 
     fun loginOnTable(tableCode: String, tablePassword: String) {
-        //TODO()
+        // TODO()
     }
 }
 
@@ -21,4 +21,3 @@ data class TableLoginState(
     val success: Table? = null,
     val error: Throwable? = null
 )
-

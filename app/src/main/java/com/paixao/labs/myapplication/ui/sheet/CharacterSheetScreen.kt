@@ -49,8 +49,8 @@ import com.paixao.labs.myapplication.domain.models.Race
 import com.paixao.labs.myapplication.ui.sheet.components.NameAndLevelRow
 import com.paixao.labs.myapplication.ui.theme.SheetTheme
 import com.paixao.labs.myapplication.ui.utils.Dimens
-import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 import com.paixao.labs.myapplication.ui.utils.components.Toolbar
+import com.paixao.labs.myapplication.ui.utils.components.buttons.PrimaryButton
 import kotlinx.coroutines.launch
 
 @ExperimentalUnitApi
@@ -81,7 +81,6 @@ class CharacterDetailsScreen(
     }
 }
 
-
 @Composable
 private fun AndroidScreen.Sheet(
     title: String,
@@ -110,8 +109,7 @@ private fun AndroidScreen.Sheet(
                     character = character,
                     leftOnValueChange = { newName -> model.updateCharacterName(newName) },
                     rightOnValueChange = { newLevel -> model.updateCharacterLevel(newLevel) },
-
-                    )
+                )
 
                 Row(
                     Modifier
@@ -123,15 +121,16 @@ private fun AndroidScreen.Sheet(
                         character = character,
                         onSelected = { jobClass ->
                             model.updateJobClass(jobClass)
-                        })
+                        }
+                    )
 
                     RaceDropdown(
                         modifier = Modifier.weight(1F),
                         character = character,
                         onSelected = { race ->
                             model.updateRace(race)
-                        })
-
+                        }
+                    )
                 }
 
                 AttributesField(character.attributes, model)
@@ -220,7 +219,6 @@ private fun AttributeRow(
                     unfocusedIndicatorColor = Color.Transparent
                 ),
             )
-
         }
         Card(
             shape = RoundedCornerShape(4.dp),
@@ -273,4 +271,3 @@ fun mockedHero() = Character(
     ),
     id = ""
 )
-

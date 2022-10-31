@@ -51,7 +51,6 @@ class LoginScreen : Screen {
         if (loginState.success != null)
             navigator.push(HomeScreen())
 
-
         SheetTheme {
             Surface(
                 color = MaterialTheme.colors.onPrimary

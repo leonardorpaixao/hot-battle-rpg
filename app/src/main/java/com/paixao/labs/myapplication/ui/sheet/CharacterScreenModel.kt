@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-
 internal class CharacterScreenModel @Inject constructor(
     private val userHandler: UserHandler,
     private val sessionHandler: SessionHandler,
@@ -24,7 +23,6 @@ internal class CharacterScreenModel @Inject constructor(
     fun updateCharacterChanges(character: Character) {
         _characterSheet = character
     }
-
 
     fun updateCharacterName(newName: String) {
         _characterSheet = _characterSheet?.copy(name = newName)
@@ -45,60 +43,63 @@ internal class CharacterScreenModel @Inject constructor(
     fun updateAttribute(newAttribute: String, content: Attribute) {
         val adjustedAttr = if (newAttribute.isBlank()) "0" else newAttribute
         when (content) {
-            is Attribute.Strength -> _characterSheet =
-                _characterSheet?.copy(
-                    attributes = _characterSheet?.attributes!!.copy(
-                        strength = Attribute.Strength(
-                            (adjustedAttr.toInt())
+            is Attribute.Strength ->
+                _characterSheet =
+                    _characterSheet?.copy(
+                        attributes = _characterSheet?.attributes!!.copy(
+                            strength = Attribute.Strength(
+                                (adjustedAttr.toInt())
+                            )
                         )
                     )
-                )
 
-            is Attribute.Agility -> _characterSheet =
-                _characterSheet?.copy(
-                    attributes = _characterSheet?.attributes!!.copy(
-                        agility = Attribute.Agility(
-                            (adjustedAttr.toInt())
+            is Attribute.Agility ->
+                _characterSheet =
+                    _characterSheet?.copy(
+                        attributes = _characterSheet?.attributes!!.copy(
+                            agility = Attribute.Agility(
+                                (adjustedAttr.toInt())
+                            )
                         )
                     )
-                )
 
-
-            is Attribute.Constitution -> _characterSheet =
-                _characterSheet?.copy(
-                    attributes = _characterSheet?.attributes!!.copy(
-                        constitution = Attribute.Constitution((adjustedAttr.toInt()))
-                    )
-                )
-
-            is Attribute.Intelligence -> _characterSheet =
-                _characterSheet?.copy(
-                    attributes = _characterSheet?.attributes!!.copy(
-                        intelligence = Attribute.Intelligence((adjustedAttr.toInt()))
-                    )
-                )
-
-
-            is Attribute.Wisdom -> _characterSheet =
-                _characterSheet?.copy(
-                    attributes = _characterSheet?.attributes!!.copy(
-                        wisdom = Attribute.Wisdom(
-                            (adjustedAttr.toInt())
+            is Attribute.Constitution ->
+                _characterSheet =
+                    _characterSheet?.copy(
+                        attributes = _characterSheet?.attributes!!.copy(
+                            constitution = Attribute.Constitution((adjustedAttr.toInt()))
                         )
                     )
-                )
 
-            is Attribute.Charisma -> _characterSheet =
-                _characterSheet?.copy(
-                    attributes = _characterSheet?.attributes!!.copy(
-                        charisma = Attribute.Charisma(
-                            (adjustedAttr.toInt())
+            is Attribute.Intelligence ->
+                _characterSheet =
+                    _characterSheet?.copy(
+                        attributes = _characterSheet?.attributes!!.copy(
+                            intelligence = Attribute.Intelligence((adjustedAttr.toInt()))
                         )
                     )
-                )
+
+            is Attribute.Wisdom ->
+                _characterSheet =
+                    _characterSheet?.copy(
+                        attributes = _characterSheet?.attributes!!.copy(
+                            wisdom = Attribute.Wisdom(
+                                (adjustedAttr.toInt())
+                            )
+                        )
+                    )
+
+            is Attribute.Charisma ->
+                _characterSheet =
+                    _characterSheet?.copy(
+                        attributes = _characterSheet?.attributes!!.copy(
+                            charisma = Attribute.Charisma(
+                                (adjustedAttr.toInt())
+                            )
+                        )
+                    )
         }
     }
-
 
     fun saveCharacter(oldCharacter: Character, isNewCharacter: Boolean) {
         if (isNewCharacter) createNewCharacter()
@@ -128,12 +129,11 @@ internal class CharacterScreenModel @Inject constructor(
                         println(error)
                     }
                 )
-
             }
         }
     }
 
-    private fun createNewCharacter(): Unit {
+    private fun createNewCharacter() {
         runBlocking {
             coroutineScope.launch {
                 runCatching {
@@ -151,14 +151,9 @@ internal class CharacterScreenModel @Inject constructor(
                         sessionHandler.updateSession()
                     },
                     onFailure = { error ->
-
                     }
                 )
-
             }
         }
-
     }
 }
-
-

@@ -9,7 +9,6 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-
 fun DatabaseReference.observeValue(): Flow<DataSnapshot> =
     callbackFlow {
         val listener = object : ValueEventListener {
@@ -25,7 +24,6 @@ fun DatabaseReference.observeValue(): Flow<DataSnapshot> =
         addValueEventListener(listener)
         awaitClose { removeEventListener(listener) }
     }
-
 
 fun DatabaseReference.observeChildEvent(): Flow<DataSnapshot?> {
     return callbackFlow {

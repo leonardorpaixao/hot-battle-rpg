@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.paixao.labs.myapplication.R
 import com.paixao.labs.myapplication.domain.models.Character
 
-
 private val ONLY_NUMBERS_REGEX = "[^0-9]".toRegex()
 private const val EMPTY = ""
 
@@ -39,7 +38,6 @@ fun NameAndLevelRow(
 ) {
     var name by remember { mutableStateOf(character.name) }
     var level by remember { mutableStateOf(character.level.toString()) }
-
 
     Row(modifier = modifier.height(IntrinsicSize.Min)) {
         Card(
@@ -100,17 +98,17 @@ fun NameAndLevelRow(
 private object LevelFieldRule : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val formattedText = if (text.isNotBlank()) AnnotatedString(
-            text.replace(ONLY_NUMBERS_REGEX, ""
+            text.replace(
+                ONLY_NUMBERS_REGEX, ""
             )
         ) else AnnotatedString(EMPTY)
 
-        return TransformedText(formattedText,
+        return TransformedText(
+            formattedText,
             object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int = offset
                 override fun transformedToOriginal(offset: Int): Int = offset
             }
         )
-
     }
-
 }

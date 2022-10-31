@@ -50,7 +50,7 @@ fun Toolbar(title: String, action: () -> Unit = {}) {
             Modifier
                 .align(Alignment.CenterVertically)
                 .clickable(role = Role.Button) { action() },
-            )
+        )
         Text(
             text = title,
             textAlign = TextAlign.Start,

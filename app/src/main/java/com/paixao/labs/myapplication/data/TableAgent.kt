@@ -13,7 +13,6 @@ internal class TableAgent(
     private val firebaseFireStore: FirebaseFirestore,
 ) : TableHandler {
 
-
     override suspend fun createTable(userId: String, newTableData: Table) {
         val tableId = Date.from(Instant.now()).time.toString()
         val tableRequest = newTableData.copy(tableCode = tableId)
@@ -27,19 +26,19 @@ internal class TableAgent(
             .await()
     }
 
-    override suspend fun deleteTable(userId: String, tableToDelete: Table) {
+    override suspend fun deleteTable(userId: String, characterToDelete: Table) {
         firebaseFireStore
             .collection(COLLECTION)
             .document(userId)
             .set(
-                mapOf(MASTER_FIELD to mapOf(TABLES_FIELD to FieldValue.arrayRemove(tableToDelete))),
+                mapOf(MASTER_FIELD to mapOf(TABLES_FIELD to FieldValue.arrayRemove(characterToDelete))),
                 SetOptions.merge()
             )
             .await()
     }
 
     override suspend fun updateTable(userId: String, newTableData: Table, oldTableData: Table) {
-        deleteTable(userId = userId, tableToDelete = oldTableData)
+        deleteTable(userId = userId, characterToDelete = oldTableData)
         createTable(userId = userId, newTableData = newTableData)
     }
 
@@ -49,6 +48,3 @@ internal class TableAgent(
         const val COLLECTION = "users"
     }
 }
-
-
-

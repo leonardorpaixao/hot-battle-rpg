@@ -1,6 +1,5 @@
 package com.paixao.labs.myapplication.data
 
-
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
@@ -66,7 +65,6 @@ internal class UserAgent(
 
         val removeCharacterRequest = CharacterRequestMapper(oldCharacterData)
 
-
         characterReference
             .update(mapOf(CHARACTERS_OBJ_REF to FieldValue.arrayRemove(removeCharacterRequest)))
             .await()
@@ -74,7 +72,6 @@ internal class UserAgent(
         characterReference
             .update(mapOf(CHARACTERS_OBJ_REF to FieldValue.arrayUnion(updatedCharacterRequest)))
             .await()
-
     }
 
     private companion object {
@@ -83,6 +80,3 @@ internal class UserAgent(
         const val CHARACTERS_OBJ_REF = "characters"
     }
 }
-
-
-

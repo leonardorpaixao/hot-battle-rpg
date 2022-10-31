@@ -1,7 +1,5 @@
 package com.paixao.labs.myapplication.domain.services
 
-import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DataSnapshot
 import com.paixao.labs.myapplication.domain.models.Character
 import com.paixao.labs.myapplication.domain.models.User
 

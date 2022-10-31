@@ -45,8 +45,6 @@ class HomeScreen : AndroidScreen() {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
 
-
-
         SheetTheme {
             Surface(
                 color = MaterialTheme.colors.background
@@ -92,7 +90,6 @@ class HomeScreen : AndroidScreen() {
                                     fontWeight = FontWeight.Bold,
                                     color = Color.Black
                                 )
-
                             }
                         }
                         Spacer(modifier = Modifier.weight(1F))
@@ -105,7 +102,6 @@ class HomeScreen : AndroidScreen() {
                         )
                     }
                 }
-
             }
         }
     }
