@@ -13,4 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "hot-battle-rpg"
-include ':app'
+include(":app")
+enableFeaturePreview("VERSION_CATALOGS")
