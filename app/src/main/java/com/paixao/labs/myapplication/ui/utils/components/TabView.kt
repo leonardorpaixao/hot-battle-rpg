@@ -29,9 +29,8 @@ object TabViewManager {
     @Composable
     operator fun invoke() {
         TabRow(selectedTabIndex = 1) {
-            
         }
-        
+
         PrimaryButton(
             action = {},
             text = "Experimental"
@@ -43,11 +42,10 @@ data class TabViewModel(
     val icon: TabIcon
 )
 
-
 object TabIcon {
-    
+
     @Composable
-    operator fun invoke(text: String, @DrawableRes icon: Int) {
+    operator fun invoke(text: String, @DrawableRes icon: Int = R.drawable.ic_back) {
         Column(
             modifier = Modifier
                 .background(Color.White)
@@ -56,7 +54,7 @@ object TabIcon {
             verticalArrangement = Arrangement.Center
         ) {
             Image(
-                painterResource(R.drawable.ic_back),
+                painterResource(icon),
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.height(24.dp)

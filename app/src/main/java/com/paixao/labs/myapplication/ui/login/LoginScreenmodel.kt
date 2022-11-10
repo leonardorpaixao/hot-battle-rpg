@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-
 internal class LoginScreenModel @Inject constructor(
     private val sessionManager: SessionHandler
 ) : ScreenModel {

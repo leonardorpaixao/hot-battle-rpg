@@ -1,15 +1,7 @@
 buildscript {
 
-    // FIXME: Repository declaration should be moved to settings.gradle file to work with gradle 7.4.2+
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-        maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    }
-
     dependencies {
-        classpath("com.google.gms:google-services:4.3.10")
+        classpath("com.google.gms:google-services:4.3.14")
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.41")
         classpath("org.jetbrains.compose:compose-gradle-plugin:1.2.0-rc01")
     }

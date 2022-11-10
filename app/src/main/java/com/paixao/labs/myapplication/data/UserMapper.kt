@@ -58,7 +58,6 @@ object UserMapper {
             masterId = tableResponse.masterId
         )
     }
-
 }
 
 private fun AttributesResponse.toDomain(): Attributes = run {

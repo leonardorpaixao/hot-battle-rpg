@@ -3,7 +3,6 @@ package com.paixao.labs.myapplication.ui.utils.components.buttons
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -24,7 +23,7 @@ fun PrimaryButton(
     val background = remember(isBackGroundInvisible) {
         if (isBackGroundInvisible) Color.Transparent else null
     }
-    
+
     Box(modifier = Modifier.background(background ?: MaterialTheme.colors.background)) {
         BaseButton(
             modifier = modifier ?: Modifier.padding(horizontal = Dimens.large, vertical = 10.dp),

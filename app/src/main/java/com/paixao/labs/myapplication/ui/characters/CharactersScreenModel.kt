@@ -41,13 +41,14 @@ internal class CharactersScreenModel @Inject constructor(
                     )
                 }.fold(
                     onSuccess = { userResult ->
-                        _characters.emit(_characters.value.filterNot { character ->
-                            character == deletedCharacter
-                        })
+                        _characters.emit(
+                            _characters.value.filterNot { character ->
+                                character == deletedCharacter
+                            }
+                        )
                         sessionHandler.updateSession()
                     },
                     onFailure = { error ->
-
                     }
                 )
             }

@@ -21,7 +21,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-rc02"
+        kotlinCompilerExtensionVersion = "1.2.0-rc02"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -30,7 +30,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
-        freeCompilerArgs = listOf("-Xjvm-default=enable")
+        freeCompilerArgs = listOf("-Xjvm-default=all","-opt-in=kotlin.RequiresOptIn")
     }
 
     testOptions {
@@ -38,6 +38,9 @@ android {
             it.useJUnitPlatform()
         }
     }
+
+    namespace = "com.paixao.labs.myapplication"
+    buildToolsVersion = "33.0.0"
 }
 
 dependencies {

@@ -39,7 +39,6 @@ internal class SingletonModule {
         userHandler: UserAgent
     ): SessionAgent = SessionAgent(userHandler = userHandler)
 
-
     @Provides
     @Singleton
     fun retrieveTableAgent(): TableAgent = TableAgent(
@@ -111,4 +110,3 @@ internal abstract class ModelsAndServices {
     @ScreenModelKey(TableSessionScreenModel::class)
     abstract fun bindTableSessionScreenModel(model: TableSessionScreenModel): ScreenModel
 }
-

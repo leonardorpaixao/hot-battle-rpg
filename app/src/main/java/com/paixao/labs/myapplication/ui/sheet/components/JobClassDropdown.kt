@@ -76,11 +76,13 @@ fun JobClassDropdown(
             offset = DpOffset(x = 50.dp, y = 0.dp)
         ) {
             jobClasses.forEach { jobClass ->
-                DropdownMenuItem(onClick = {
-                    expanded = false
-                    selectedJobClass = jobClass
-                    onSelected(jobClass)
-                }) {
+                DropdownMenuItem(
+                    onClick = {
+                        expanded = false
+                        selectedJobClass = jobClass
+                        onSelected(jobClass)
+                    }
+                ) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = jobClass.value,

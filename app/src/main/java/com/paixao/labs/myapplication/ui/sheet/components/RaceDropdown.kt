@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.paixao.labs.myapplication.R
 import com.paixao.labs.myapplication.domain.models.Character
@@ -74,11 +73,13 @@ fun RaceDropdown(
                 .fillMaxWidth(),
         ) {
             raceClasses.forEach { race ->
-                DropdownMenuItem(onClick = {
-                    expanded = false
-                    selectedJobClass = race
-                    onSelected(race)
-                }) {
+                DropdownMenuItem(
+                    onClick = {
+                        expanded = false
+                        selectedJobClass = race
+                        onSelected(race)
+                    }
+                ) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = race.value,

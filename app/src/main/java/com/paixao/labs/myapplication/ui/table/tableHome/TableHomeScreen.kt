@@ -45,7 +45,8 @@ object TableHomeScreen : Screen {
                         TableHomeItem("Entrar em uma mesa", {})
                         TableHomeItem(
                             contentText = "Mestrar uma aventura",
-                            action = { navigator?.push(TableListingScreen) })
+                            action = { navigator?.push(TableListingScreen) }
+                        )
                     }
                 }
             }
@@ -55,10 +56,11 @@ object TableHomeScreen : Screen {
 
 @Composable
 private fun TableHomeItem(contentText: String, action: () -> Unit) {
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = Dimens.large, vertical = Dimens.xLarge)
-        .clickable { action() },
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = Dimens.large, vertical = Dimens.xLarge)
+            .clickable { action() },
         backgroundColor = MaterialTheme.colors.primary,
         border = BorderStroke(Dimens.strokeSize, color = MaterialTheme.colors.primaryVariant),
         content = {

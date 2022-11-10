@@ -109,7 +109,8 @@ private fun Screen.TableItem(table: Table) {
                 contentDescription = "",
                 modifier = Modifier.clickable {
                     model.deleteTable(table)
-                })
+                }
+            )
         }
     }
 }

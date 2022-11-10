@@ -42,7 +42,7 @@ data class TableSessionScreen(val table: Table) : Screen {
 
         val direction = model.characterPosition.collectAsState().value
 
-        LaunchedEffect(model){
+        LaunchedEffect(model) {
             model.retrieveAdventureSession()
         }
 
@@ -68,7 +68,6 @@ private fun TableSessionScreenContent(
     playerPosition: PlayerPosition,
     changePlayerPosition: (PlayerPosition) -> Unit,
 ) {
-
 
     SheetTheme() {
         Surface() {
@@ -177,7 +176,6 @@ private fun TableSessionPreview() {
         changePlayerPosition = {},
     )
 }
-
 
 internal data class AdventureSession(
     val table: Table,

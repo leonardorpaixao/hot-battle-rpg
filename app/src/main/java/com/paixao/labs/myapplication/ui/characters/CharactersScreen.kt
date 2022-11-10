@@ -64,7 +64,6 @@ internal object CharactersScreen : Screen {
             characters = characters,
             deleteCharacter = model::deleteCharacter
         )
-
     }
 }
 
@@ -73,7 +72,7 @@ private fun CharactersContent(
     characters: List<Character>,
     deleteCharacter: (Character) -> Unit,
 
-    ) {
+) {
     val navigator = LocalNavigator.current
 
     SheetTheme {
@@ -98,7 +97,8 @@ private fun CharactersContent(
                         onClick = { navigator?.push(CharacterDetailsScreen(character)) },
                         deleteCharacter = { characterToDelete ->
                             deleteCharacter(characterToDelete)
-                        })
+                        }
+                    )
                 }
                 Spacer(Modifier.weight(1F))
 
@@ -147,9 +147,9 @@ private fun CharacterItem(
                     .shadow(elevation = Dimens.strokeSize, shape = RoundedCornerShape(50.dp))
                     .clickable {
                         deleteCharacter(character)
-                    })
+                    }
+            )
         }
-
     }
 }
 
@@ -159,4 +159,3 @@ private fun PreviewCharactersScreen() {
     val characters = listOf(Character(name = "ReLL1k", id = ""), Character(name = "Lylie", id = ""))
     CharactersContent(characters = characters, deleteCharacter = {})
 }
-

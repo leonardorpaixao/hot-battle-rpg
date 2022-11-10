@@ -106,7 +106,6 @@ internal class CreateOrEditTableScreenModel @Inject constructor(
                                 updatedTable = _newTable
                             )
                         )
-
                     },
                     onFailure = { error ->
                         Log.e("Error to update table --> $error", error.message.toString())

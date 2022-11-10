@@ -16,7 +16,6 @@ internal data class Users(
     val position: String = ""
 )
 
-
 internal class AdventureSessionAgent(private val firebaseDatabase: FirebaseDatabase) :
     AdventureSessionHandler {
 

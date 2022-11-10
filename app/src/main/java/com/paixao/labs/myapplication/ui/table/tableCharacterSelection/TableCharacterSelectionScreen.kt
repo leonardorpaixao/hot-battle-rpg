@@ -6,7 +6,6 @@ import cafe.adriel.voyager.core.screen.Screen
 object TableCharacterSelectionScreen : Screen {
     @Composable
     override fun Content() {
-        //TODO()
+        // TODO()
     }
-
 }
